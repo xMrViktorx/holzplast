@@ -81,7 +81,7 @@ class AdminController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'name' => ['required', 'string'],
+            'email' => ['required', 'string'],
             'password' => ['required'],
         ]);
 
@@ -91,8 +91,8 @@ class AdminController extends Controller
         }
 
         return back()->withErrors([
-            'name' => 'The provided credentials do not match our records.',
-        ])->onlyInput('name');
+            'email' => 'A megadott email és jelszó kombináció hibás.',
+        ])->onlyInput('email');
     }
 
     public function logout(Request $request)

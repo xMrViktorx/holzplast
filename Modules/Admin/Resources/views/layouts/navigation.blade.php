@@ -1,5 +1,5 @@
 <?php
-$currentUrl = \Request::segment(3);
+$currentUrl = \Request::segment(2);
 ?>
 
 @extends('admin::layouts.master')
@@ -17,7 +17,7 @@ $currentUrl = \Request::segment(3);
                         </svg>
                     </button>
                     <a href="#" class="flex items-center text-xl font-bold">
-                        <img src="{{ url('/images/logo.svg') }}" alt="logo" class="h-8">
+                        <img src="{{ url('build/images/logo.png') }}" alt="logo" class="h-8">
                     </a>
 
                 </div>
@@ -46,10 +46,31 @@ $currentUrl = \Request::segment(3);
                 <aside>
                     <ul>
                         <li>
-                            <a class="flex items-center px-4 py-2 text-gray-600 rounded-lg {{ $currentUrl == 'dashboard' ? 'bg-white shadow-md' : 'bg-gray-200' }}"
+                            <a class="flex items-center px-4 py-2 text-gray-600 rounded-lg {{ $currentUrl == 'dashboard' ? 'bg-white shadow-md' : 'bg-gray-100' }}"
                                 href="{{ route('admin.dashboard') }}">
                                 <i class="ri-home-4-line text-2xl"></i>
-                                <span class="mx-4 font-medium">Dashboard</span>
+                                <span class="mx-4 font-medium">Irányítópult</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center px-4 py-2 mt-5 text-gray-600 rounded-lg {{ $currentUrl == 'category' ? 'bg-white shadow-md' : 'bg-gray-100' }}"
+                                href="{{ route('admin.category.index') }}">
+                                <i class="ri-layout-grid-line text-2xl"></i>
+                                <span class="mx-4 font-medium">Kategóriák</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center px-4 py-2 mt-5 text-gray-600 rounded-lg {{ $currentUrl == 'product' ? 'bg-white shadow-md' : 'bg-gray-100' }}"
+                                href="{{ route('admin.product.index') }}">
+                                <i class="ri-dropbox-line text-2xl"></i>
+                                <span class="mx-4 font-medium">Termékek</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center px-4 py-2 mt-5 text-gray-600 rounded-lg {{ $currentUrl == 'user' ? 'bg-white shadow-md' : 'bg-gray-100' }}"
+                                href="{{ route('admin.user.index') }}">
+                                <i class="ri-team-line text-2xl"></i>
+                                <span class="mx-4 font-medium">Felhasználók</span>
                             </a>
                         </li>
                     </ul>
