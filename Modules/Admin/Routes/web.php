@@ -35,6 +35,12 @@ Route::prefix('admin')->group(function () {
         Route::delete('/delete/{id}', 'CategoryController@destroy')->name('admin.category.delete');
     });
 
+    Route::prefix('order')->middleware('auth')->group(function () {
+        Route::get('/', 'OrderController@index')->name('admin.order.index');
+        Route::get('/edit/{id}', 'OrderController@edit')->name('admin.order.edit');
+        Route::post('/update/{id}', 'OrderController@update')->name('admin.order.update');
+    });
+
     Route::prefix('user')->middleware('auth')->group(function () {
         Route::get('/', 'UserController@index')->name('admin.user.index');
         Route::get('/create', 'UserController@create')->name('admin.user.create');
