@@ -3,7 +3,10 @@
 namespace Modules\Admin\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Modules\Admin\Entities\Order;
 use Illuminate\Routing\Controller;
+use Modules\Admin\Entities\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Support\Renderable;
 
@@ -108,6 +111,39 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        return view('admin::dashboard');
+        $productsNum = Product::all()->count();
+
+        $ordersNum = Order::all()->count();
+        $orderTotalIncome = Order::all()->where('status', '!=', 'canceled')->pluck('total_price')->sum();
+
+        // Get the current month's first and last date
+        $firstDayOfMonth = Carbon::now()->startOfMonth();
+        $lastDayOfMonth = Carbon::now()->endOfMonth();
+
+        // Retrieve orders for the current month and calculate the total price
+        $orderMonthlyIncome = Order::where('status', '!=', 'canceled')
+            ->whereDate('created_at', '>=', $firstDayOfMonth)
+            ->whereDate('created_at', '<=', $lastDayOfMonth)
+            ->pluck('total_price')
+            ->sum();
+
+        // Get the monthly orders
+        $monthlyOrders = Order::all()->groupBy(function ($val) {
+            Carbon::setLocale(app()->getLocale());
+            return Carbon::parse($val->created_at)->locale(app()->getLocale())->format('M');
+        })->take(12);
+
+        $monthlyOrdersMonth = [];
+        $monthlyOrdersView = [];
+        $monthlyIncomeView = [];
+
+        foreach ($monthlyOrders as $key => $order) {
+            $monthlyOrdersMonth[] = $key;
+            $monthlyOrdersView[] = $order->count();
+            $monthlyIncomeView[] = $order->pluck('total_price')->sum();
+        }
+
+        $dashboard = ['productsNum' => $productsNum, 'ordersNum' => $ordersNum, 'orderTotalIncome' => $orderTotalIncome, 'orderMonthlyIncome' => $orderMonthlyIncome];
+        return view('admin::dashboard', compact('dashboard', 'monthlyOrdersMonth', 'monthlyOrdersView', 'monthlyIncomeView'));
     }
 }
