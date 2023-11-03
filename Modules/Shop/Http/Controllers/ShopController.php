@@ -2,9 +2,11 @@
 
 namespace Modules\Shop\Http\Controllers;
 
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Modules\Admin\Entities\Product;
+use Modules\Admin\Entities\Category;
+use Illuminate\Contracts\Support\Renderable;
 
 class ShopController extends Controller
 {
@@ -14,7 +16,8 @@ class ShopController extends Controller
      */
     public function index()
     {
-        return view('shop::index');
+        $products = Product::where('status', 1)->get();
+        return view('shop::index', compact('products'));
     }
 
     /**
@@ -75,5 +78,48 @@ class ShopController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Get all categories for the navbar.
+     * @return Renderable
+     */
+    public static function getCategories()
+    {
+        $categories = Category::where('status', 1)->get();
+        return $categories;
+    }
+
+    /**
+     * Show product or category view. If neither category nor product matches, abort with code 404.
+     *
+     * @return \Illuminate\View\View|\Exception
+     */
+    public function getCategoryOrProduct(Request $request)
+    {
+        // Get the path info from the request and decode the URL
+        $pathInfo = urldecode(trim($request->getPathInfo(), '/'));
+
+        // Split the path into segments using the '/' delimiter
+        $segments = explode('/', $pathInfo);
+
+        // Get the last segment (slug)
+        $slug = end($segments);
+
+        $product = Product::where('slug', $slug)->first();
+
+        if ($product) {
+            return view('shop::product-details', compact('product'));
+        }
+
+        $category = Category::where('slug', $slug)->first();
+        if ($category) {
+            $products = $category->products;
+            return view('shop::category-overview', compact('products'));
+        } else {
+            abort(404);
+        }
+
+        return view('shop::details');
     }
 }

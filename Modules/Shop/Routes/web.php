@@ -12,3 +12,5 @@
 */
 
 Route::get('/', 'ShopController@index');
+
+Route::fallback('ShopController@getCategoryOrProduct');

@@ -7,7 +7,12 @@ module.exports = {
     "./Modules/**/*.blade.php",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        backgroundMain: "#CEF3AE",
+        backgroundNavbar: "#9AC084",
+      },
+    },
   },
   plugins: [],
 }
