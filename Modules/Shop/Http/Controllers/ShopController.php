@@ -3,9 +3,12 @@
 namespace Modules\Shop\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Modules\Shop\Entities\Cart;
+use Modules\Admin\Entities\Order;
 use Illuminate\Routing\Controller;
 use Modules\Admin\Entities\Product;
 use Modules\Admin\Entities\Category;
+use Modules\Admin\Entities\OrderItem;
 use Illuminate\Contracts\Support\Renderable;
 
 class ShopController extends Controller
@@ -121,5 +124,72 @@ class ShopController extends Controller
         }
 
         return view('shop::details');
+    }
+
+    /**
+     * Display a listing of the resource.
+     * @return Renderable
+     */
+    public function checkout()
+    {
+        $cart = '';
+        if (session()->has('cart')) {
+            $cart = Cart::find(session()->get('cart')->id);
+        } else {
+            return redirect()->route('cart.index');
+        }
+        return view('shop::checkout', compact('cart'));
+    }
+
+    /**
+     * Save the order.
+     * @return Renderable
+     */
+    public function saveOrder(Request $request)
+    {
+        $validated = $request->validate([
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|email',
+            'phone' => 'required',
+            'country' => 'required|string',
+            'city' => 'required|string',
+            'postcode' => 'required',
+            'address' => 'required',
+            'house_number' => 'required',
+        ]);
+
+        $cart = '';
+        if (session()->has('cart')) {
+            $cart = Cart::find(session()->get('cart')->id);
+        } else {
+            return redirect()->route('cart.index');
+        }
+
+        $validated['status'] = 'in progress';
+        $validated['total_price'] = $cart->total_price;
+
+        $order = Order::create($validated);
+
+        $cart->order_id = $order->id;
+        $cart->save();
+
+        $cartItems = $cart->cart_items->map(function ($item) use ($order) {
+            return [
+                'name' => $item->name,
+                'product_id' => $item->product_id,
+                'order_id' => $order->id,
+                'quantity' => $item->quantity,
+                'item_price' => $item->item_price,
+                'total_price' => $item->total_price,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        });
+
+        OrderItem::insert($cartItems->toArray());
+
+        session()->forget('cart');
+        return view('shop::success', compact('cart'));
     }
 }

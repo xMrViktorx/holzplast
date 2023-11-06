@@ -24,6 +24,5 @@ class AdminDatabaseSeeder extends Seeder
                 'password' => Hash::make('admin'),
             ]
         );
-        // $this->call("OthersTableSeeder");
     }
 }

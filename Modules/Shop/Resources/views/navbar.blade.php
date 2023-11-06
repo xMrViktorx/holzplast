@@ -1,5 +1,8 @@
 @php
     $categories = Modules\Shop\Http\Controllers\ShopController::getCategories();
+    if (session()->has('cart')) {
+        $cart = Modules\Shop\Entities\Cart::find(session()->get('cart')->id);
+    }
 @endphp
 
 <nav class="bg-backgroundNavbar px-2 sm:px-4 py-2 fixed z-10 w-full">
@@ -19,7 +22,17 @@
             </div>
         </div>
 
-        <div class="flex">
+        <div class="flex items-center">
+            @if (isset($cart) && $cart)
+                <a href="{{ route('cart.index') }}" class="mr-5 relative p-2 cursor-pointer hover:text-white">
+                    <i class="ri-shopping-cart-line text-3xl"></i>
+                    <div class="absolute right-0 top-0 font-bold">{{ isset($cart) && $cart ? $cart->items_count : '' }}</div>
+                </a>
+            @else
+                <span class="mr-5 relative p-2 cursor-default">
+                    <i class="ri-shopping-cart-line text-3xl"></i>
+                </span>
+            @endif
             <div class="text-black bg-backgroundMain flex items-center justify-center w-min m-auto my-2">
                 <div class="overflow-hidden flex">
                     <input type="text" class="px-4 py-2 bg-backgroundMain focus:outline-none placeholder-black" placeholder="Keresés...">

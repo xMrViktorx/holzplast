@@ -9,7 +9,7 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['customer_name', 'customer_country', 'customer_address', 'customer_postcode', 'customer_email', 'customer_phone', 'status', 'total_price'];
+    protected $fillable = ['first_name', 'last_name', 'email', 'phone', 'country', 'city',  'postcode', 'address', 'house_number', 'status', 'total_price'];
 
     /**
      * Get the order_items record associated with the order.

@@ -31,7 +31,7 @@
                         Név
                     </th>
                     <th scope="row" class="py-4 px-6">
-                        {{ $order->customer_name }}
+                        {{ $order->first_name }} {{ $order->last_name }}
                     </th>
                 </tr>
                 <tr>
@@ -39,7 +39,15 @@
                         Ország
                     </th>
                     <th scope="row" class="py-4 px-6">
-                        {{ $order->customer_country }}
+                        {{ $order->country }}
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="col" class="py-3 px-6 text-gray-700 text-xs uppercase bg-gray-50">
+                        Város
+                    </th>
+                    <th scope="row" class="py-4 px-6">
+                        {{ $order->city }}
                     </th>
                 </tr>
                 <tr>
@@ -47,7 +55,7 @@
                         Irányítószám
                     </th>
                     <th scope="row" class="py-4 px-6">
-                        {{ $order->customer_postcode }}
+                        {{ $order->postcode }}
                     </th>
                 </tr>
                 <tr>
@@ -55,7 +63,7 @@
                         Cím
                     </th>
                     <th scope="row" class="py-4 px-6">
-                        {{ $order->customer_address }}
+                        {{ $order->address }} {{ $order->house_number }}
                     </th>
                 </tr>
                 <tr>
@@ -63,7 +71,7 @@
                         Email
                     </th>
                     <th scope="row" class="py-4 px-6">
-                        {{ $order->customer_email }}
+                        {{ $order->email }}
                     </th>
                 </tr>
                 <tr>
@@ -71,7 +79,7 @@
                         Telefonszám
                     </th>
                     <th scope="row" class="py-4 px-6">
-                        {{ $order->customer_phone }}
+                        {{ $order->phone }}
                     </th>
                 </tr>
             </table>

@@ -154,6 +154,14 @@ return [
         'image' => 'kép',
         'price' => 'ár',
         'amount' => 'mennyiség',
+        'first_name' => 'vezetéknév',
+        'last_name' => 'keresztnév',
+        'country' => 'ország',
+        'city' => 'város',
+        'postcode' => 'irányítószám',
+        'address' => 'utca',
+        'house_number' => 'házszám',
+        'phone' => 'telefonszám',
     ],
 
 ];

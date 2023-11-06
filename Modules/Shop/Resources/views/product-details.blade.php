@@ -1,20 +1,28 @@
 @extends('shop::layouts.master')
 
 @section('content')
-    <div class="h-screen flex flex-wrap justify-center items-center gap-8">
+    <div class="min-h-screen flex flex-wrap justify-center items-center gap-8">
         <img class="max-h-[48rem] max-w-screen object-cover" src="{{ url($product->productImage->path) }}" alt="">
         <div class="max-w-3xl py-5">
-            <div class="font-bold text-4xl mb-2">{{ $product->name }}</div>
-            {!! $product->description !!}
-            <div class="font-bold text-xl my-4">{{ $product->price }} forint</div>
-            <div class="flex items-center mb-4">
-                <button id="decreaseBtn" class="bg-backgroundNavbar px-3 py-1 rounded-l">-</button>
-                <input type="text" id="numericInput" class="border border-gray-300 px-3 py-1 w-16 text-center" value="1" name="quantity">
-                <button id="increaseBtn" class="bg-backgroundNavbar px-3 py-1 rounded-r">+</button>
-            </div>
-            <input type="hidden" name="product_id" value="{{ $product->id }}">
+            <div class="font-bold text-5xl mb-2">{{ $product->name }}</div>
+            <div class="text-lg">{!! $product->description !!}</div>
+            <div class="font-bold text-2xl my-4">{{ $product->price }} forint</div>
+            <form action="{{ route('cart.add') }}" method="POST">
+                @csrf
+                <div class="flex items-center mb-4">
+                    <span id="decreaseBtn" class="bg-backgroundNavbar px-4 py-2 rounded-l cursor-pointer flex items-center">
+                        <i class="ri-subtract-line"></i>
+                    </span>
+                    <input type="text" id="numericInput" class="border border-gray-300 px-6 py-2 w-16 text-center focus:outline-none text-lg" value="1" name="quantity">
+                    <span id="increaseBtn" class="bg-backgroundNavbar px-4 py-2 rounded-r cursor-pointer flex items-center">
+                        <i class="ri-add-line"></i>
+                    </span>
+                </div>
+                <input type="hidden" name="product_id" value="{{ $product->id }}">
 
-            <button class="bg-backgroundNavbar px-8 py-2 rounded">Megrendelés</button>
+                <button type="submit" class="bg-backgroundNavbar p-4 px-9 text-lg cursor-pointer rounded shadow-lg hover:bg-backgroundMain flex items-center">Kosárba <i class="pl-1 ri-shopping-bag-line"></i>
+                </button>
+            </form>
         </div>
     </div>
 
@@ -33,6 +41,10 @@
         // Increase button click event listener
         increaseBtn.addEventListener('click', function() {
             let value = parseInt(inputElement.value);
+            if (isNaN(value)) {
+                inputElement.value = 1;
+                return;
+            }
             inputElement.value = ++value;
         });
 
