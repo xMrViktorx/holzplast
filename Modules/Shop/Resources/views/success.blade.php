@@ -2,8 +2,9 @@
 
 @section('content')
     <div class="min-h-screen flex flex-col justify-center items-center">
-        <h1 class="text-2xl">Sikeres vásárlás.</h1>
-        <p>2-5 napon belül a rendelésed megkérdezik a megadott címre.</p>
+        <i class="ri-check-double-line text-8xl"></i>
+        <h1 class="text-4xl font-bold">Sikeres vásárlás</h1>
+        <p class="text-xl py-3 text-center">2-5 munkanapon belül a rendelésed megérkezik a megadott címre.</p>
         <a href="/" class="bg-backgroundNavbar p-2 px-9 mt-3 text-lg cursor-pointer rounded shadow-lg hover:bg-backgroundMain text-center">Vásárlás folytatása</a>
     </div>
 @endsection

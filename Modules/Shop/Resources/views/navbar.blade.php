@@ -22,7 +22,7 @@
             </div>
         </div>
 
-        <div class="flex items-center">
+        <div class="flex items-center w-full md:w-auto">
             @if (isset($cart) && $cart)
                 <a href="{{ route('cart.index') }}" class="mr-5 relative p-2 cursor-pointer hover:text-white">
                     <i class="ri-shopping-cart-line text-3xl"></i>
@@ -35,7 +35,9 @@
             @endif
             <div class="text-black bg-backgroundMain flex items-center justify-center w-min m-auto my-2">
                 <div class="overflow-hidden flex">
-                    <input type="text" class="px-4 py-2 bg-backgroundMain focus:outline-none placeholder-black" placeholder="Keresés...">
+                    <form action="{{ route('shop.index') }}" method="GET">
+                        <input type="text" name="search" class="px-4 py-2 bg-backgroundMain focus:outline-none placeholder-black" placeholder="Keresés...">
+                    </form>
                     <button class="flex items-center justify-center px-4">
                         <svg class="h-4 w-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                             <path d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />

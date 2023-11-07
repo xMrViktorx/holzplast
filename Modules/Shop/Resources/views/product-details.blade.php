@@ -1,10 +1,10 @@
 @extends('shop::layouts.master')
 
 @section('content')
-    <div class="min-h-screen flex flex-wrap justify-center items-center gap-8">
+    <div class="min-h-screen flex flex-wrap justify-center items-center gap-6">
         <img class="max-h-[48rem] max-w-screen object-cover" src="{{ url($product->productImage->path) }}" alt="">
-        <div class="max-w-3xl py-5">
-            <div class="font-bold text-5xl mb-2">{{ $product->name }}</div>
+        <div class="max-w-3xl px-3 py-5">
+            <div class="font-bold text-3xl md:text-5xl mb-2">{{ $product->name }}</div>
             <div class="text-lg">{!! $product->description !!}</div>
             <div class="font-bold text-2xl my-4">{{ $product->price }} forint</div>
             <form action="{{ route('cart.add') }}" method="POST">

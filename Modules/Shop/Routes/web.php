@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'ShopController@index');
+Route::get('/', 'ShopController@index')->name('shop.index');
 Route::post('/add', 'CartController@add')->name('cart.add');
 Route::get('/shopping-cart', 'CartController@index')->name('cart.index');
 Route::post('/remove-all', 'CartController@removeAll')->name('cart.remove.all');

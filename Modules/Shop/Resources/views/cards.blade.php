@@ -7,7 +7,7 @@
             <div class="flex-1 px-6 py-4 flex flex-col justify-between">
                 <div>
                     <div class="font-bold text-xl mb-2">{{ $product->name }}</div>
-                    <div class="text-black text-base line-clamp-5">
+                    <div class="text-base line-clamp-5">
                         {!! $product->description !!}
                     </div>
                 </div>

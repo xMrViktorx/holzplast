@@ -17,9 +17,16 @@ class ShopController extends Controller
      * Display a listing of the resource.
      * @return Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::where('status', 1)->get();
+        $query = $request->input('search');
+        if ($query) {
+            $products = Product::where('name', 'like', '%' . $query . '%')
+                ->orWhere('description', 'like', '%' . $query . '%')
+                ->paginate(12);
+        } else {
+            $products = Product::orderBy('updated_at', 'desc')->paginate(12);
+        }
         return view('shop::index', compact('products'));
     }
 
@@ -117,7 +124,7 @@ class ShopController extends Controller
 
         $category = Category::where('slug', $slug)->first();
         if ($category) {
-            $products = $category->products;
+            $products =  $category->products()->orderBy('updated_at', 'desc')->paginate(12);
             return view('shop::category-overview', compact('products'));
         } else {
             abort(404);
