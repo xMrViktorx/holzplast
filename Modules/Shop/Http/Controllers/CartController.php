@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Modules\Admin\Entities\Product;
 use Modules\Shop\Entities\CartItem;
 use Illuminate\Contracts\Support\Renderable;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CartController extends Controller
 {
@@ -150,6 +151,7 @@ class CartController extends Controller
 
         $cartInstance = new Cart();
         $cartInstance->addProduct($request->product_id, $request);
+
         return redirect()->back();
     }
 
@@ -159,13 +161,59 @@ class CartController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function removeAll(Request $request)
+    public function removeAll()
     {
-        $cart = Cart::find($request->id);
+        $cart = '';
+        if (session()->has('cart')) {
+            $cart = Cart::find(session()->get('cart')->id);
+        }
         //TODO Swal are you sure want to remove everything | success message after deleting everything
         if ($cart) {
+            foreach ($cart->cart_items as $item) {
+                $product = Product::find($item->product_id);
+                if ($product) {
+                    $product->amount += $item->quantity;
+                    $product->save();
+                }
+            }
             $cart->delete();
             return redirect()->back();
+        }
+
+        return redirect()->back();
+    }
+
+    /**
+     * Remove item from cart
+     * @param int $id
+     * @param Request $request
+     * @return Renderable
+     */
+    public function removeItem($id)
+    {
+        $cartItem = CartItem::find($id);
+
+        if ($cartItem) {
+            $cart_id = $cartItem->cart_id;
+
+            $product = Product::find($cartItem->product_id);
+            if ($product) {
+                $product->amount += $cartItem->quantity;
+                $product->save();
+            }
+
+            $cartItem->delete();
+
+            $cartItems = CartItem::where('cart_id', $cart_id)->get();
+            $cart = Cart::find($cart_id);
+
+            $cart->items_count = $cartItems->count();
+            $cart->total_price = $cartItems->pluck('total_price')->sum();
+            $cart->save();
+
+            if ($cartItems->count() == 0) {
+                $cart->delete();
+            }
         }
 
         return redirect()->back();

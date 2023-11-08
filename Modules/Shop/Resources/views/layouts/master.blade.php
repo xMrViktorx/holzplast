@@ -16,10 +16,9 @@
 </head>
 
 <body class="bg-backgroundMain font-['Raleway']">
-
+    @include('sweetalert::alert')
     @include('shop::navbar')
     @yield('content')
-
 </body>
 
 </html>

@@ -21,10 +21,9 @@
                 </ul>
             </div>
         </div>
-
-        <div class="flex items-center w-full md:w-auto">
+        <div class="block md:hidden">
             @if (isset($cart) && $cart)
-                <a href="{{ route('cart.index') }}" class="mr-5 relative p-2 cursor-pointer hover:text-white">
+                <a href="{{ route('cart.index') }}" class="relative p-2 cursor-pointer hover:text-white">
                     <i class="ri-shopping-cart-line text-3xl"></i>
                     <div class="absolute right-0 top-0 font-bold">{{ isset($cart) && $cart ? $cart->items_count : '' }}</div>
                 </a>
@@ -33,6 +32,20 @@
                     <i class="ri-shopping-cart-line text-3xl"></i>
                 </span>
             @endif
+        </div>
+        <div class="flex items-center w-full md:w-auto">
+            <div class="hidden md:block">
+                @if (isset($cart) && $cart)
+                    <a href="{{ route('cart.index') }}" class="mr-5 relative p-2 cursor-pointer hover:text-white">
+                        <i class="ri-shopping-cart-line text-3xl"></i>
+                        <div class="absolute right-0 top-0 font-bold">{{ isset($cart) && $cart ? $cart->items_count : '' }}</div>
+                    </a>
+                @else
+                    <span class="mr-5 relative p-2 cursor-default">
+                        <i class="ri-shopping-cart-line text-3xl"></i>
+                    </span>
+                @endif
+            </div>
             <div class="text-black bg-backgroundMain flex items-center justify-center w-min m-auto my-2">
                 <div class="overflow-hidden flex">
                     <form action="{{ route('shop.index') }}" method="GET">

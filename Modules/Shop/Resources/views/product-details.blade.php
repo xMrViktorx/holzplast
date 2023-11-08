@@ -13,7 +13,7 @@
                     <span id="decreaseBtn" class="bg-backgroundNavbar px-4 py-2 rounded-l cursor-pointer flex items-center">
                         <i class="ri-subtract-line"></i>
                     </span>
-                    <input type="text" id="numericInput" class="border border-gray-300 px-6 py-2 w-16 text-center focus:outline-none text-lg" value="1" name="quantity">
+                    <input type="text" id="numericInput" class="border border-gray-300 p-2 w-16 text-center focus:outline-none" value="1" name="quantity">
                     <span id="increaseBtn" class="bg-backgroundNavbar px-4 py-2 rounded-r cursor-pointer flex items-center">
                         <i class="ri-add-line"></i>
                     </span>
