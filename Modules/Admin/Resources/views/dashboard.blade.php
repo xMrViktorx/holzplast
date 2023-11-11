@@ -25,7 +25,7 @@
                 <i class="ri-wallet-2-line text-2xl"></i>
             </div>
             <div>
-                <span class="inline-block text-2xl font-bold">{{ $dashboard['orderTotalIncome'] }} ft.</span>
+                <span class="inline-block text-2xl font-bold">{{ $dashboard['orderTotalIncome'] }} forint</span>
                 <span class="block text-gray-500">Teljes bevétel</span>
             </div>
         </div>
@@ -34,7 +34,7 @@
                 <i class="ri-coin-line text-2xl"></i>
             </div>
             <div>
-                <span class="block text-2xl font-bold">{{ $dashboard['orderMonthlyIncome'] }} ft.</span>
+                <span class="block text-2xl font-bold">{{ $dashboard['orderMonthlyIncome'] }} forint</span>
                 <span class="block text-gray-500">Havi bevétel</span>
             </div>
         </div>

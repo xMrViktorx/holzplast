@@ -28,7 +28,7 @@
                     <div class="absolute right-0 top-0 font-bold">{{ isset($cart) && $cart ? $cart->items_count : '' }}</div>
                 </a>
             @else
-                <span class="mr-5 relative p-2 cursor-default">
+                <span class="mr-0 sm:mr-5 relative p-2 cursor-default">
                     <i class="ri-shopping-cart-line text-3xl"></i>
                 </span>
             @endif

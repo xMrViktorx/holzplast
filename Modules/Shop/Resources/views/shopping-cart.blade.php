@@ -27,7 +27,7 @@
                                 <p class="w-48 hidden 2xl:block">{{ $item->item_price }} forint</p>
                                 <p class="w-48 font-bold hidden 2xl:block">{{ $item->total_price }} forint</p>
                                 <p class="w-20 flex justify-center">
-                                    <a href="{{ route('cart.remove.item', $item->id) }}" class="text-2xl bg-backgroundNavbar hidden 2xl:flex px-4 py-2 w-min rounded cursor-pointer"><i class="ri-delete-bin-line"></i></a>
+                                    <a onclick="removeItem('{{ route('cart.remove.item', ['id' => $item->id]) }}')" class="text-2xl bg-backgroundNavbar hidden 2xl:flex px-4 py-2 w-min rounded cursor-pointer"><i class="ri-delete-bin-line"></i></a>
                                     <span class="text-2xl bg-backgroundNavbar flex 2xl:hidden px-4 py-2 w-min rounded cursor-pointer editBtn" data-item-id="{{ $item->id }}"><i class="ri-pencil-line"></i></span>
                                 </p>
                             </div>
@@ -42,13 +42,13 @@
                                         <input type="text" id="numericInput-{{ $item->id }}" class="border border-gray-300 p-2 w-16 text-center quantityInput" value="{{ $item->quantity }}" name="quantity[{{ $item->id }}]">
                                         <span id="increaseBtn-{{ $item->id }}" class="bg-backgroundNavbar px-4 py-2 rounded-r increaseBtn cursor-pointer flex items-center"><i class="ri-add-line"></i></span>
                                     </div>
-                                    <button class="bg-backgroundNavbar px-8 py-2 rounded block">Frissítés</button>
+                                    <button class="bg-backgroundNavbar px-8 py-2 rounded block shadow-lg hover:bg-backgroundMain">Frissítés</button>
                                 </div>
                             </div>
                         @endforeach
                         <div class="flex justify-between items-center text-lg">
-                            <a href="{{ route('cart.remove.all') }}" class="underline">Összes törlése</a>
-                            <button class="bg-backgroundNavbar px-8 py-2 rounded hidden 2xl:block">Frissítés</button>
+                            <a class="underline cursor-pointer" onclick="removeAll('{{ route('cart.remove.all') }}')">Összes törlése</a>
+                            <button class="bg-backgroundNavbar px-8 py-2 rounded hidden shadow-lg hover:bg-backgroundMain 2xl:block">Frissítés</button>
                         </div>
                     </form>
                 </div>
@@ -65,27 +65,28 @@
                         <p>Teljes összeg</p>
                         <p>{{ $cart->total_price }} forint</p>
                     </div>
-                    <a href="{{ route('shop.checkout') }}" class="bg-backgroundNavbar px-8 py-2 rounded w-100 block mb-3 text-center text-lg">Tovább</a>
+                    <a href="{{ route('shop.checkout') }}" class="bg-backgroundNavbar px-8 py-2 rounded w-100 block mb-3 text-center text-lg shadow-lg hover:bg-backgroundMain">Tovább</a>
 
-                    <a href="/" class="bg-backgroundNavbar px-8 py-2 rounded w-100 block text-center text-lg">Vissza a vásárláshoz</a>
+                    <a href="/" class="bg-backgroundNavbar px-8 py-2 rounded w-100 block text-center text-lg shadow-lg hover:bg-backgroundMain">Vissza a vásárláshoz</a>
                 </div>
             </div>
         @else
             <div class="flex justify-center flex-col">
                 <h3 class="text-2xl">A kosár jelenleg üres</h3>
-                <a href="/" class="bg-backgroundNavbar p-2 px-9 mt-3 text-lg cursor-pointer rounded shadow-lg hover:bg-backgroundMain text-center">Vásárlás folytatása</a>
+                <a href="/" class="bg-backgroundNavbar px-8 py-2 mt-3 text-lg cursor-pointer rounded shadow-lg hover:bg-backgroundMain text-center">Vásárlás folytatása</a>
             </div>
         @endif
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         const quantityInputs = document.querySelectorAll('.quantityInput');
-
-        // Add an input event listener for each quantity input
-        quantityInputs.forEach(inputElement => {
-            inputElement.addEventListener('input', function() {
-                // Remove non-numeric characters using a regular expression
-                this.value = this.value.replace(/\D/g, '');
+        quantityInputs.forEach(quantityInput => {
+            quantityInput.addEventListener("change", (event) => {
+                const quantity = event.target.value;
+                quantityInputs.forEach(inputElement => {
+                    inputElement.value = quantity;
+                });
             });
         });
 
@@ -95,8 +96,11 @@
             button.addEventListener('click', function() {
                 const itemId = button.id.split('-')[1];
                 const input = button.nextElementSibling; // Get the next sibling element, which is the input field
+                const quantity = parseInt(input.value) - 1;
                 if (input && input.value > 1) {
-                    input.value = parseInt(input.value) - 1;
+                    quantityInputs.forEach(inputElement => {
+                        inputElement.value = quantity;
+                    });
                 }
             });
         });
@@ -107,9 +111,10 @@
             button.addEventListener('click', function() {
                 const itemId = button.id.split('-')[1];
                 const input = button.previousElementSibling; // Get the previous sibling element, which is the input field
-                if (input) {
-                    input.value = parseInt(input.value) + 1;
-                }
+                const quantity = parseInt(input.value) + 1;
+                quantityInputs.forEach(inputElement => {
+                    inputElement.value = quantity;
+                });
             });
         });
 
@@ -138,5 +143,49 @@
                 }
             });
         });
+
+        function removeAll(redirectURL) {
+            Swal.fire({
+                title: 'Biztos benne?',
+                text: "Minden terméket ki szeretne törölni a kosárból?",
+                icon: 'question',
+                color: '#000',
+                showCancelButton: true,
+                confirmButtonColor: '#9AC084',
+                cancelButtonColor: '#9AC084',
+                confirmButtonText: "Törlés",
+                cancelButtonText: "Vissza",
+                customClass: {
+                    confirmButton: 'swal-buttons',
+                    cancelButton: 'swal-buttons'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location = redirectURL;
+                }
+            })
+        }
+
+        function removeItem(redirectURL) {
+            Swal.fire({
+                title: 'Biztos benne?',
+                text: "El szeretné távolítani a terméket a kosárból?",
+                icon: 'question',
+                color: '#000',
+                showCancelButton: true,
+                confirmButtonColor: '#9AC084',
+                cancelButtonColor: '#9AC084',
+                confirmButtonText: "Törlés",
+                cancelButtonText: "Vissza",
+                customClass: {
+                    confirmButton: 'swal-buttons',
+                    cancelButton: 'swal-buttons'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location = redirectURL;
+                }
+            })
+        }
     </script>
 @endsection

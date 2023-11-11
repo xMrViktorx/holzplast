@@ -118,8 +118,8 @@
                     <p>Teljes összeg</p>
                     <p>{{ $cart->total_price }} forint</p>
                 </div>
-                <button type="submit" class="bg-backgroundNavbar px-8 py-2 rounded w-full block mb-3 text-center text-lg">Megrendelés</button>
-                <a href="/" class="bg-backgroundNavbar px-8 py-2 rounded w-100 block text-center text-lg">Vissza a vásárláshoz</a>
+                <button type="submit" class="bg-backgroundNavbar px-8 py-2 rounded w-full block mb-3 text-center text-lg shadow-lg hover:bg-backgroundMain">Megrendelés</button>
+                <a href="/" class="bg-backgroundNavbar px-8 py-2 rounded w-100 block text-center text-lg shadow-lg hover:bg-backgroundMain">Vissza a vásárláshoz</a>
             </div>
         </form>
     </div>

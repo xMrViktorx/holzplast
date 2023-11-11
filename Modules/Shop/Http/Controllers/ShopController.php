@@ -7,9 +7,11 @@ use Modules\Shop\Entities\Cart;
 use Modules\Admin\Entities\Order;
 use Illuminate\Routing\Controller;
 use Modules\Admin\Entities\Product;
+use Illuminate\Support\Facades\Mail;
 use Modules\Admin\Entities\Category;
 use Modules\Admin\Entities\OrderItem;
 use Illuminate\Contracts\Support\Renderable;
+use Modules\Shop\Emails\OrderConfirmationMail;
 
 class ShopController extends Controller
 {
@@ -23,71 +25,12 @@ class ShopController extends Controller
         if ($query) {
             $products = Product::where('name', 'like', '%' . $query . '%')
                 ->orWhere('description', 'like', '%' . $query . '%')
+                ->where('status', 1)
                 ->paginate(12);
         } else {
-            $products = Product::orderBy('updated_at', 'desc')->paginate(12);
+            $products = Product::where('status', 1)->orderBy('updated_at', 'desc')->paginate(12);
         }
         return view('shop::index', compact('products'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     * @return Renderable
-     */
-    public function create()
-    {
-        return view('shop::create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     * @param Request $request
-     * @return Renderable
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Show the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function show($id)
-    {
-        return view('shop::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     * @param int $id
-     * @return Renderable
-     */
-    public function edit($id)
-    {
-        return view('shop::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     * @param Request $request
-     * @param int $id
-     * @return Renderable
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     * @param int $id
-     * @return Renderable
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     /**
@@ -124,7 +67,7 @@ class ShopController extends Controller
 
         $category = Category::where('slug', $slug)->first();
         if ($category) {
-            $products =  $category->products()->orderBy('updated_at', 'desc')->paginate(12);
+            $products =  $category->products()->where('status', 1)->orderBy('updated_at', 'desc')->paginate(12);
             return view('shop::category-overview', compact('products'));
         } else {
             abort(404);
@@ -195,6 +138,8 @@ class ShopController extends Controller
         });
 
         OrderItem::insert($cartItems->toArray());
+
+        Mail::to($order->email)->bcc(env('ADMIN_ADDRESS'))->send(new OrderConfirmationMail($order));
 
         session()->forget('cart');
         return view('shop::success', compact('cart'));

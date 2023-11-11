@@ -44,7 +44,7 @@
                             @endif
                         </td>
                         <td class="py-4 px-6">
-                            {{ $order->total_price }} ft.
+                            {{ $order->total_price }} forint
                         </td>
                         <td class="py-4 px-6">
                             {{ $order->created_at }}

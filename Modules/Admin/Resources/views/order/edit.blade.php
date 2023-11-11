@@ -120,10 +120,10 @@
                                 {{ $item->quantity }}
                             </td>
                             <td class="py-4 px-6">
-                                {{ $item->item_price }} ft.
+                                {{ $item->item_price }} forint
                             </td>
                             <td class="py-4 px-6">
-                                {{ $item->total_price }} ft.
+                                {{ $item->total_price }} forint
                             </td>
                         </tr>
                     @endforeach
