@@ -195,7 +195,7 @@ class CartController extends Controller
         $carts = Cart::whereNull('order_id')
             ->where('updated_at', '<', Carbon::now()->subHour())
             ->get();
-        \Log::info('itt');
+
         foreach ($carts as $cart) {
             foreach ($cart->cart_items as $item) {
                 $product = Product::find($item->product_id);

@@ -3,8 +3,10 @@
 namespace Modules\Admin\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Modules\Shop\Entities\Cart;
 use Modules\Admin\Entities\Order;
 use Illuminate\Routing\Controller;
+use Modules\Admin\Entities\Product;
 use Illuminate\Contracts\Support\Renderable;
 
 class OrderController extends Controller
@@ -52,6 +54,17 @@ class OrderController extends Controller
         $validated = $request->validate([
             'status' => 'required',
         ]);
+
+        if ($validated['status'] == 'canceled') {
+            $cart = Cart::where('order_id', $id)->first();
+            foreach ($cart->cart_items as $item) {
+                $product = Product::find($item->product_id);
+                if ($product) {
+                    $product->amount += $item->quantity;
+                    $product->save();
+                }
+            }
+        }
 
         $order->update($validated);
 

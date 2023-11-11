@@ -22,6 +22,7 @@
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                     Küldés
                 </button>
+                <a class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" href="{{ route('admin.user.index') }}">Belépés</a>
             </div>
         </form>
         <p class="text-center text-gray-500 text-xs">
