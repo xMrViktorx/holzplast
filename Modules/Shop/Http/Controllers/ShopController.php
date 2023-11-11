@@ -139,7 +139,7 @@ class ShopController extends Controller
 
         OrderItem::insert($cartItems->toArray());
 
-        Mail::to($order->email)->bcc(env('ADMIN_ADDRESS'))->send(new OrderConfirmationMail($order));
+        Mail::to($order->email)->bcc(env('ADMIN_ADDRESS', 'shop@shop.holzlast.hu'))->send(new OrderConfirmationMail($order));
 
         session()->forget('cart');
         return view('shop::success', compact('cart'));
