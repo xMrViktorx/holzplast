@@ -28,7 +28,7 @@ class ShopController extends Controller
                 ->where('status', 1)
                 ->paginate(12);
         } else {
-            $products = Product::where('status', 1)->orderBy('updated_at', 'desc')->paginate(12);
+            $products = Product::where('status', 1)->orderBy('created_at', 'desc')->paginate(12);
         }
         return view('shop::index', compact('products'));
     }
@@ -67,7 +67,7 @@ class ShopController extends Controller
 
         $category = Category::where('slug', $slug)->first();
         if ($category) {
-            $products =  $category->products()->where('status', 1)->orderBy('updated_at', 'desc')->paginate(12);
+            $products =  $category->products()->where('status', 1)->orderBy('created_at', 'desc')->paginate(12);
             return view('shop::category-overview', compact('products'));
         } else {
             abort(404);
