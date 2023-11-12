@@ -32,7 +32,11 @@
                             {{ $order->id }}#
                         </th>
                         <th scope="row" class="py-4 px-6">
-                            {{ $order->first_name }} {{ $order->last_name }}
+                            @if ($order->company)
+                                {{ $order->company }}
+                            @else
+                                {{ $order->first_name }} {{ $order->last_name }}
+                            @endif
                         </th>
                         <td class="py-4 px-6">
                             @if ($order->status == 'in progress')

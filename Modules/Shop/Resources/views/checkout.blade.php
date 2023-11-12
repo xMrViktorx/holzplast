@@ -6,6 +6,34 @@
             @csrf
             <div class="w-full xl:w-auto p-6 xl:p-0 text-lg">
                 <div class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full flex items-center px-3 mb-0">
+                        <input class="w-8 h-8 border-none outline-none focus:ring-0 mr-2" id="private_person" name="private_person" value="1" type="checkbox">
+                        <label class="tracking-wide font-medium" for="private_person">
+                            Magánszemély
+                        </label>
+                    </div>
+                </div>
+                <div id="company_details" class="flex flex-wrap -mx-3 mb-6">
+                    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                        <label class="block tracking-wide font-medium mb-2" for="company">
+                            Cég neve<span class="text-red-700">*</span>
+                        </label>
+                        <input class="appearance-none block w-full rounded py-3 px-4 leading-tight focus:outline-none" id="company" name="company" value="{{ old('company') }}" type="text">
+                        @error('company')
+                            <div class="text-red-700">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="w-full md:w-1/2 px-3">
+                        <label class="block tracking-wide font-medium mb-2" for="tax_number">
+                            Adószám<span class="text-red-700">*</span>
+                        </label>
+                        <input class="appearance-none block w-full rounded py-3 px-4 leading-tight focus:outline-none" id="tax_number" name="tax_number" value="{{ old('tax_number') }}" type="text">
+                        @error('tax_number')
+                            <div class="text-red-700">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div id="person_details" class="flex flex-wrap -mx-3 mb-6">
                     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <label class="block tracking-wide font-medium mb-2" for="first_name">
                             Vezetéknév<span class="text-red-700">*</span>
@@ -123,4 +151,32 @@
             </div>
         </form>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get references to the checkbox and the fields
+            var privatePersonCheckbox = document.getElementById("private_person");
+            var companyFields = document.getElementById("company_details");
+            var personFields = document.getElementById("person_details");
+
+            // Function to toggle visibility based on checkbox state
+            function toggleFieldsVisibility() {
+                if (privatePersonCheckbox.checked) {
+                    // If private_person is checked, hide company and tax_number, show first and last name
+                    companyFields.classList.add("hidden");
+                    personFields.classList.remove("hidden");
+                } else {
+                    // If private_person is not checked, show company and tax_number, hide first and last name
+                    companyFields.classList.remove("hidden");
+                    personFields.classList.add("hidden");
+                }
+            }
+
+            // Initial visibility setup
+            toggleFieldsVisibility();
+
+            // Attach event listener to the checkbox to update visibility on change
+            privatePersonCheckbox.addEventListener("change", toggleFieldsVisibility);
+        });
+    </script>
 @endsection

@@ -8,7 +8,13 @@
 </head>
 
 <body>
-    <p>Tisztelt {{ $order->first_name }} {{ $order->last_name }},</p>
+    <p>Tisztelt
+        @if ($order->company)
+            {{ $order->company }},
+        @else
+            {{ $order->first_name }} {{ $order->last_name }},
+        @endif
+    </p>
     <p>Szeretnénk megköszönni Önnek a rendelést a Holz-Plast webáruházban. Nagyon hálásak vagyunk a bizalmáért és örömmel értesítjük, hogy rendelése sikeresen beérkezett és feldolgozásra kerül.</p>
     <h3><b>A rendelés adatai:</b></h3>
     <p>Rendelés azonosítója: #{{ $order->id }}<br>

@@ -162,6 +162,8 @@ return [
         'address' => 'utca',
         'house_number' => 'házszám',
         'phone' => 'telefonszám',
+        'company' => 'cég neve',
+        'tax_number' => 'adószám'
     ],
 
 ];

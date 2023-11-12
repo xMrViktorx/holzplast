@@ -97,9 +97,7 @@ class ShopController extends Controller
      */
     public function saveOrder(Request $request)
     {
-        $validated = $request->validate([
-            'first_name' => 'required|string',
-            'last_name' => 'required|string',
+        $fields = [
             'email' => 'required|email',
             'phone' => 'required',
             'country' => 'required|string',
@@ -107,7 +105,17 @@ class ShopController extends Controller
             'postcode' => 'required',
             'address' => 'required',
             'house_number' => 'required',
-        ]);
+        ];
+
+        if ($request->private_person) {
+            $fields['first_name'] = 'required|string';
+            $fields['last_name'] = 'required|string';
+        } else {
+            $fields['company'] = 'required|string';
+            $fields['tax_number'] = 'required|string';
+        }
+
+        $validated = $request->validate($fields);
 
         $cart = '';
         if (session()->has('cart')) {
