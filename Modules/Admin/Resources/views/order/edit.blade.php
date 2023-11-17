@@ -24,17 +24,22 @@
 
         <h3 class="text-2xl mb-6 mt-8 sm:mt-0">Megrendelő adatai</h3>
 
-        <div class="relative shadow-md sm:rounded-lg w-min">
+        <div class="relative shadow-md sm:rounded-lg flex flex-wrap gap-6">
             <table class="text-sm text-left text-gray-500">
+                <tr>
+                    <th colspan="2" scope="col" class="py-3 px-6 text-gray-700 text-center uppercase bg-gray-50">
+                        Számlázási cím
+                    </th>
+                </tr>
                 <tr>
                     <th scope="col" class="py-3 px-6 text-gray-700 text-xs uppercase bg-gray-50">
                         Név
                     </th>
                     <th scope="row" class="py-4 px-6">
-                        @if ($order->company)
-                            {{ $order->company }}
+                        @if ($billing_address->company)
+                            {{ $billing_address->company }}
                         @else
-                            {{ $order->first_name }} {{ $order->last_name }}
+                            {{ $billing_address->first_name }} {{ $billing_address->last_name }}
                         @endif
                     </th>
                 </tr>
@@ -43,7 +48,7 @@
                         Ország
                     </th>
                     <th scope="row" class="py-4 px-6">
-                        {{ $order->country }}
+                        {{ $billing_address->country }}
                     </th>
                 </tr>
                 <tr>
@@ -51,7 +56,7 @@
                         Város
                     </th>
                     <th scope="row" class="py-4 px-6">
-                        {{ $order->city }}
+                        {{ $billing_address->city }}
                     </th>
                 </tr>
                 <tr>
@@ -59,7 +64,7 @@
                         Irányítószám
                     </th>
                     <th scope="row" class="py-4 px-6">
-                        {{ $order->postcode }}
+                        {{ $billing_address->postcode }}
                     </th>
                 </tr>
                 <tr>
@@ -67,7 +72,7 @@
                         Cím
                     </th>
                     <th scope="row" class="py-4 px-6">
-                        {{ $order->address }} {{ $order->house_number }}
+                        {{ $billing_address->address }} {{ $billing_address->house_number }}
                     </th>
                 </tr>
                 <tr>
@@ -75,7 +80,7 @@
                         Email
                     </th>
                     <th scope="row" class="py-4 px-6">
-                        {{ $order->email }}
+                        {{ $billing_address->email }}
                     </th>
                 </tr>
                 <tr>
@@ -83,7 +88,74 @@
                         Telefonszám
                     </th>
                     <th scope="row" class="py-4 px-6">
-                        {{ $order->phone }}
+                        {{ $billing_address->phone }}
+                    </th>
+                </tr>
+            </table>
+            <table class="text-sm text-left text-gray-500">
+                <tr>
+                    <th colspan="2" scope="col" class="py-3 px-6 text-gray-700 text-center uppercase bg-gray-50">
+                        Szállítási cím
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="col" class="py-3 px-6 text-gray-700 text-xs uppercase bg-gray-50">
+                        Név
+                    </th>
+                    <th scope="row" class="py-4 px-6">
+                        @if ($shipping_address->company)
+                            {{ $shipping_address->company }}
+                        @else
+                            {{ $shipping_address->first_name }} {{ $shipping_address->last_name }}
+                        @endif
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="col" class="py-3 px-6 text-gray-700 text-xs uppercase bg-gray-50">
+                        Ország
+                    </th>
+                    <th scope="row" class="py-4 px-6">
+                        {{ $shipping_address->country }}
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="col" class="py-3 px-6 text-gray-700 text-xs uppercase bg-gray-50">
+                        Város
+                    </th>
+                    <th scope="row" class="py-4 px-6">
+                        {{ $shipping_address->city }}
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="col" class="py-3 px-6 text-gray-700 text-xs uppercase bg-gray-50">
+                        Irányítószám
+                    </th>
+                    <th scope="row" class="py-4 px-6">
+                        {{ $shipping_address->postcode }}
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="col" class="py-3 px-6 text-gray-700 text-xs uppercase bg-gray-50">
+                        Cím
+                    </th>
+                    <th scope="row" class="py-4 px-6">
+                        {{ $shipping_address->address }} {{ $shipping_address->house_number }}
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="col" class="py-3 px-6 text-gray-700 text-xs uppercase bg-gray-50">
+                        Email
+                    </th>
+                    <th scope="row" class="py-4 px-6">
+                        {{ $shipping_address->email }}
+                    </th>
+                </tr>
+                <tr>
+                    <th scope="col" class="py-3 px-6 text-gray-700 text-xs uppercase bg-gray-50">
+                        Telefonszám
+                    </th>
+                    <th scope="row" class="py-4 px-6">
+                        {{ $shipping_address->phone }}
                     </th>
                 </tr>
             </table>
@@ -124,10 +196,10 @@
                                 {{ $item->quantity }}
                             </td>
                             <td class="py-4 px-6">
-                                {{ $item->item_price }} forint
+                                {{ formatPrice($item->item_price) }}
                             </td>
                             <td class="py-4 px-6">
-                                {{ $item->total_price }} forint
+                                {{ formatPrice($item->total_price) }}
                             </td>
                         </tr>
                     @endforeach

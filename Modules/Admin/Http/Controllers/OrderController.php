@@ -31,7 +31,9 @@ class OrderController extends Controller
         $order = Order::find($id);
 
         if ($order) {
-            return view('admin::order.edit', compact('order'));
+            $billing_address = $order->billing_address;
+            $shipping_address = $order->shipping_address;
+            return view('admin::order.edit', compact('order', 'billing_address', 'shipping_address'));
         } else {
             return redirect()->back();
         }

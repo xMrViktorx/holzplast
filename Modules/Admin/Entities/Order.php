@@ -9,7 +9,7 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['first_name', 'last_name', 'company', 'tax_number', 'email', 'phone', 'country', 'city',  'postcode', 'address', 'house_number', 'status', 'total_price'];
+    protected $fillable = ['status', 'total_price'];
 
     /**
      * Get the order_items record associated with the order.
@@ -17,5 +17,15 @@ class Order extends Model
     public function order_items()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function billing_address()
+    {
+        return $this->hasOne(BillingAddress::class);
+    }
+
+    public function shipping_address()
+    {
+        return $this->hasOne(ShippingAddress::class);
     }
 }

@@ -29,6 +29,9 @@ class OrderConfirmationMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Rendelési megerősítés - Holz-Plast')->view('shop::email.order-confirmation');
+        $billing_address = $this->order->billing_address;
+        $shipping_address = $this->order->shipping_address;
+
+        return $this->subject('Rendelési megerősítés - Holz-Plast')->view('shop::email.order-confirmation', compact('billing_address', 'shipping_address'));
     }
 }

@@ -13,7 +13,7 @@
                         </div>
                     </div>
                     <div class="flex justify-between items-end mt-6">
-                        <div class="font-bold text-2xl mb-2">{{ $product->price }} forint</div>
+                        <div class="font-bold text-2xl mb-2">{{ formatPrice($product->price) }}</div>
                         <a href="/{{ $product->category->slug }}/{{ $product->slug }}" class="bg-backgroundNavbar px-8 py-2 text-lg cursor-pointer rounded shadow-lg hover:bg-backgroundMain">Megrendelés</a>
                     </div>
                 </div>

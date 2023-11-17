@@ -10,6 +10,8 @@ use Modules\Admin\Entities\Product;
 use Illuminate\Support\Facades\Mail;
 use Modules\Admin\Entities\Category;
 use Modules\Admin\Entities\OrderItem;
+use Modules\Admin\Entities\BillingAddress;
+use Modules\Admin\Entities\ShippingAddress;
 use Illuminate\Contracts\Support\Renderable;
 use Modules\Shop\Emails\OrderConfirmationMail;
 
@@ -97,23 +99,63 @@ class ShopController extends Controller
      */
     public function saveOrder(Request $request)
     {
-        $fields = [
-            'email' => 'required|email',
-            'phone' => 'required',
-            'country' => 'required|string',
-            'city' => 'required|string',
-            'postcode' => 'required',
-            'address' => 'required',
-            'house_number' => 'required',
+        $fields = [];
+        // Common validation fields for billing
+        $commonBillingFields = [
+            'billing.email' => 'required|email',
+            'billing.phone' => 'required',
+            'billing.country' => 'required|string',
+            'billing.city' => 'required|string',
+            'billing.postcode' => 'required',
+            'billing.address' => 'required',
+            'billing.house_number' => 'required',
+            'data_privacy' => 'required',
         ];
 
-        if ($request->private_person) {
-            $fields['first_name'] = 'required|string';
-            $fields['last_name'] = 'required|string';
+        if (isset($request->billing['private_person'])) {
+            // Additional fields for private person billing
+            $commonBillingFields += [
+                'billing.first_name' => 'required|string',
+                'billing.last_name' => 'required|string',
+            ];
         } else {
-            $fields['company'] = 'required|string';
-            $fields['tax_number'] = 'required|string';
+            // Additional fields for company billing
+            $commonBillingFields += [
+                'billing.company' => 'required|string',
+                'billing.tax_number' => 'required|string',
+            ];
         }
+
+        $fields += $commonBillingFields;
+
+        // Common validation fields for shipping
+        if (!$request->use_as_shipping_address) {
+            $commonShippingFields = [
+                'shipping.email' => 'required|email',
+                'shipping.phone' => 'required',
+                'shipping.country' => 'required|string',
+                'shipping.city' => 'required|string',
+                'shipping.postcode' => 'required',
+                'shipping.address' => 'required',
+                'shipping.house_number' => 'required',
+            ];
+
+            if (isset($request->shipping['private_person'])) {
+                // Additional fields for private person shipping
+                $commonShippingFields += [
+                    'shipping.first_name' => 'required|string',
+                    'shipping.last_name' => 'required|string',
+                ];
+            } else {
+                // Additional fields for company shipping
+                $commonShippingFields += [
+                    'shipping.company' => 'required|string',
+                ];
+            }
+
+            $fields += $commonShippingFields;
+        }
+
 
         $validated = $request->validate($fields);
 
@@ -124,10 +166,32 @@ class ShopController extends Controller
             return redirect()->route('cart.index');
         }
 
-        $validated['status'] = 'in progress';
-        $validated['total_price'] = $cart->total_price;
+        $order['status'] = 'in progress';
+        $order['total_price'] = $cart->total_price;
 
-        $order = Order::create($validated);
+        $order = Order::create($order);
+
+        // Retrieve the input data from the request
+        $inputData = $request->all();
+
+        // Add or modify the 'order_id' within the 'billing' section of the request data
+        $inputData['billing']['order_id'] = $order->id;
+
+        // Set the modified data back to the request
+        $request->merge($inputData);
+
+        BillingAddress::create($request->billing);
+
+        if (!$request->use_as_shipping_address) {
+            // Add or modify the 'order_id' within the 'shipping' section of the request data
+            $inputData['shipping']['order_id'] = $order->id;
+
+            // Set the modified data back to the request
+            $request->merge($inputData);
+            ShippingAddress::create($request->shipping);
+        } else {
+            ShippingAddress::create($request->billing);
+        }
 
         $cart->order_id = $order->id;
         $cart->save();
@@ -147,9 +211,19 @@ class ShopController extends Controller
 
         OrderItem::insert($cartItems->toArray());
 
-        Mail::to($order->email)->bcc(env('ADMIN_ADDRESS', 'shop@shop.holzplast.hu'))->send(new OrderConfirmationMail($order));
+        Mail::to($order->billing_address->email)->bcc(env('ADMIN_ADDRESS', 'shop@shop.holzplast.hu'))->send(new OrderConfirmationMail($order));
 
         session()->forget('cart');
         return view('shop::success', compact('cart'));
+    }
+
+    // Function to remove suffix from array keys
+    function removeSuffix($array, $suffix)
+    {
+        $result = [];
+        foreach ($array as $key => $value) {
+            $result[substr($key, 0, -strlen($suffix))] = $value;
+        }
+        return $result;
     }
 }

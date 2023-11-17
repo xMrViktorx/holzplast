@@ -18,14 +18,14 @@
                         @foreach ($cart->cart_items as $item)
                             <div class="flex items-center text-center mb-6 text-lg">
                                 <img class="w-32 2xl:w-48 max-h-48 object-cover" src="{{ url($item->product->productImage->path) }}" alt="">
-                                <p class="w-48 text-left pl-2 "><span class="font-bold">{{ $item->name }}</span> <span class="block 2xl:hidden">{{ $item->quantity }} x {{ $item->item_price }} forint</span></p>
+                                <p class="w-48 text-left pl-2 "><span class="font-bold">{{ $item->name }}</span> <span class="block 2xl:hidden">{{ $item->quantity }} x {{ formatPrice($item->item_price) }}</span></p>
                                 <div class="w-48 items-center justify-center hidden 2xl:flex">
                                     <span id="decreaseBtn-{{ $item->id }}" class="bg-backgroundNavbar px-4 py-2 rounded-l decreaseBtn cursor-pointer flex items-center"><i class="ri-subtract-line"></i></span>
                                     <input type="text" id="numericInput-{{ $item->id }}" class="border border-gray-300 p-2 w-16 text-center quantityInput" value="{{ $item->quantity }}" name="quantity[{{ $item->id }}]">
                                     <span id="increaseBtn-{{ $item->id }}" class="bg-backgroundNavbar px-4 py-2 rounded-r increaseBtn cursor-pointer flex items-center"><i class="ri-add-line"></i></span>
                                 </div>
-                                <p class="w-48 hidden 2xl:block">{{ $item->item_price }} forint</p>
-                                <p class="w-48 font-bold hidden 2xl:block">{{ $item->total_price }} forint</p>
+                                <p class="w-48 hidden 2xl:block">{{ formatPrice($item->item_price) }}</p>
+                                <p class="w-48 font-bold hidden 2xl:block">{{ formatPrice($item->total_price) }}</p>
                                 <p class="w-20 flex justify-center">
                                     <a onclick="removeItem('{{ route('cart.remove.item', ['id' => $item->id]) }}')" class="text-2xl bg-backgroundNavbar hidden 2xl:flex px-4 py-2 w-min rounded cursor-pointer"><i class="ri-delete-bin-line"></i></a>
                                     <span class="text-2xl bg-backgroundNavbar flex 2xl:hidden px-4 py-2 w-min rounded cursor-pointer editBtn" data-item-id="{{ $item->id }}"><i class="ri-pencil-line"></i></span>
@@ -58,12 +58,31 @@
                     @foreach ($cart->cart_items as $item)
                         <div class="flex justify-between text-lg">
                             <p class="mb-4">{{ $item->quantity }} x {{ $item->name }}</p>
-                            <p class="whitespace-nowrap">{{ $item->total_price }} forint</p>
+                            <p class="whitespace-nowrap">{{ formatPrice($item->total_price) }}</p>
                         </div>
                     @endforeach
-                    <div class="flex justify-between my-6 font-bold text-lg">
-                        <p>Teljes összeg</p>
-                        <p>{{ $cart->total_price }} forint</p>
+                    <div class="flex justify-between mt-6 mb-1 font-bold text-lg">
+                        <p>Nettó összeg</p>
+                        <p>{{ formatPrice($cart->total_price / 1.27) }}</p>
+                    </div>
+                    <div class="flex justify-between my-1 font-bold text-lg">
+                        <p>ÁFA</p>
+                        <p>{{ formatPrice($cart->total_price - $cart->total_price / 1.27) }}</p>
+                    </div>
+                    <div class="flex justify-between my-1 font-bold text-lg">
+                        <p>Bruttó összeg</p>
+                        <p>{{ formatPrice($cart->total_price) }}</p>
+                    </div>
+                    <div class="flex justify-between mt-2 font-bold text-lg underline">
+                        <p>Szállítási költség</p>
+                    </div>
+                    <div class="flex justify-between font-bold text-lg">
+                        <p>10 kg alatt</p>
+                        <p>900 Ft</p>
+                    </div>
+                    <div class="flex justify-between mb-2 font-bold text-lg">
+                        <p>10 kg felett</p>
+                        <p>2500 Ft</p>
                     </div>
                     <a href="{{ route('shop.checkout') }}" class="bg-backgroundNavbar px-8 py-2 rounded w-100 block mb-3 text-center text-lg shadow-lg hover:bg-backgroundMain">Tovább</a>
 

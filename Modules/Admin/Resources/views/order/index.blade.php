@@ -32,10 +32,10 @@
                             {{ $order->id }}#
                         </th>
                         <th scope="row" class="py-4 px-6">
-                            @if ($order->company)
-                                {{ $order->company }}
+                            @if ($order->billing_address->company)
+                                {{ $order->billing_address->company }}
                             @else
-                                {{ $order->first_name }} {{ $order->last_name }}
+                                {{ $order->billing_address->first_name }} {{ $order->billing_address->last_name }}
                             @endif
                         </th>
                         <td class="py-4 px-6">
@@ -48,7 +48,7 @@
                             @endif
                         </td>
                         <td class="py-4 px-6">
-                            {{ $order->total_price }} forint
+                            {{ formatPrice($order->total_price) }}
                         </td>
                         <td class="py-4 px-6">
                             {{ $order->created_at }}
