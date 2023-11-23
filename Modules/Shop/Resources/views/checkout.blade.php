@@ -272,7 +272,7 @@
                 @foreach ($cart->cart_items as $item)
                     <div class="flex justify-between text-lg">
                         <p class="mb-4">{{ $item->quantity }} x {{ $item->name }}</p>
-                        <p class="whitespace-nowrap">{{ formatPrice($item->total_price) }} + Áfa</p>
+                        <p class="whitespace-nowrap pl-3">{{ formatPrice($item->total_price) }} + Áfa</p>
                     </div>
                 @endforeach
                 <div class="flex justify-between mt-6 mb-1 font-bold text-lg">
