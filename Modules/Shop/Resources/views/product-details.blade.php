@@ -6,7 +6,7 @@
         <div class="max-w-3xl px-3 py-5">
             <div class="font-bold text-3xl md:text-5xl mb-2">{{ $product->name }}</div>
             <div class="text-lg">{!! $product->description !!}</div>
-            <div class="font-bold text-2xl my-4">{{ formatPrice($product->price) }}<br><span class="text-sm font-normal">(Az ár tartalmazza az ÁFA-t)</span></div>
+            <div class="font-bold text-2xl my-4">{{ formatPrice($product->price) }} + Áfa</div>
             @if ($product->amount)
                 <form action="{{ route('cart.add') }}" method="POST">
                     @csrf

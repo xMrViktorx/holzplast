@@ -272,31 +272,43 @@
                 @foreach ($cart->cart_items as $item)
                     <div class="flex justify-between text-lg">
                         <p class="mb-4">{{ $item->quantity }} x {{ $item->name }}</p>
-                        <p class="whitespace-nowrap">{{ formatPrice($item->total_price) }}</p>
+                        <p class="whitespace-nowrap">{{ formatPrice($item->total_price) }} + Áfa</p>
                     </div>
                 @endforeach
                 <div class="flex justify-between mt-6 mb-1 font-bold text-lg">
                     <p>Nettó összeg</p>
-                    <p>{{ formatPrice($cart->total_price / 1.27) }}</p>
+                    <p>{{ formatPrice($cart->total_price) }}</p>
                 </div>
                 <div class="flex justify-between my-1 font-bold text-lg">
-                    <p>ÁFA</p>
-                    <p>{{ formatPrice($cart->total_price - $cart->total_price / 1.27) }}</p>
+                    <p>Szállítási költség</p>
+                    @php
+                        $cart_neto = $cart->total_price;
+
+                        $full_orders = floor($cart_neto / 35000);
+
+                        $remaining_amount = $cart_neto % 35000;
+
+                        if ($remaining_amount > 0) {
+                            $shipping_amount = ($full_orders + 1) * 2500;
+                        } else {
+                            $shipping_amount = $full_orders * 2500;
+                        }
+                    @endphp
+                    <p>{{ formatPrice($shipping_amount) }}</p>
+                </div>
+                <div class="flex justify-between my-1 font-bold text-lg">
+                    <p>Áfa</p>
+                    <p>{{ formatPrice((($cart->total_price + $shipping_amount) * 0.27)) }}</p>
                 </div>
                 <div class="flex justify-between my-1 font-bold text-lg">
                     <p>Bruttó összeg</p>
-                    <p>{{ formatPrice($cart->total_price) }}</p>
+                    <p>{{ formatPrice($cart->total_price + $shipping_amount + (($cart->total_price + $shipping_amount) * 0.27)) }}</p>
                 </div>
                 <div class="flex justify-between mt-2 font-bold text-lg underline">
                     <p>Szállítási költség</p>
                 </div>
-                <div class="flex justify-between font-bold text-lg">
-                    <p>10 kg alatt</p>
-                    <p>900 Ft</p>
-                </div>
-                <div class="flex justify-between mb-2 font-bold text-lg">
-                    <p>10 kg felett</p>
-                    <p>2500 Ft</p>
+                <div class="font-bold">
+                    <p>minden megkezdett nettó 35000 Ft rendelési összeget, nettó 2500 Ft szállítási költség terhel</p>
                 </div>
                 <div class="w-full flex items-center my-3">
                     <input class="w-8 h-8 border-none outline-none focus:ring-0 mr-2" name="data_privacy" value="1" type="checkbox">

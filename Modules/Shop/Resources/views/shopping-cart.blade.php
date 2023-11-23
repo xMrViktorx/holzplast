@@ -3,7 +3,7 @@
 @section('content')
     <div class="min-h-screen pt-32 2xl:pt-0 flex justify-center items-center gap-8">
         @if ($cart)
-            <div class="flex flex-wrap items-start shadow-xl p-6">
+            <div class="flex flex-wrap items-start shadow-xl p-4 sm:p-6">
                 <div>
                     <div class="hidden 2xl:flex text-center font-bold mb-3 text-xl">
                         <p class="w-96 text-left">Termék</p>
@@ -18,14 +18,14 @@
                         @foreach ($cart->cart_items as $item)
                             <div class="flex items-center text-center mb-6 text-lg">
                                 <img class="w-32 2xl:w-48 max-h-48 object-cover" src="{{ url($item->product->productImage->path) }}" alt="">
-                                <p class="w-48 text-left pl-2 "><span class="font-bold">{{ $item->name }}</span> <span class="block 2xl:hidden">{{ $item->quantity }} x {{ formatPrice($item->item_price) }}</span></p>
+                                <p class="w-48 text-left pl-2 "><span class="font-bold">{{ $item->name }}</span> <span class="block 2xl:hidden">{{ $item->quantity }} x {{ formatPrice($item->item_price) }} + Áfa</span></p>
                                 <div class="w-48 items-center justify-center hidden 2xl:flex">
                                     <span id="decreaseBtn-{{ $item->id }}" class="bg-backgroundNavbar px-4 py-2 rounded-l decreaseBtn cursor-pointer flex items-center"><i class="ri-subtract-line"></i></span>
                                     <input type="text" id="numericInput-{{ $item->id }}" class="border border-gray-300 p-2 w-16 text-center quantityInput" value="{{ $item->quantity }}" name="quantity[{{ $item->id }}]">
                                     <span id="increaseBtn-{{ $item->id }}" class="bg-backgroundNavbar px-4 py-2 rounded-r increaseBtn cursor-pointer flex items-center"><i class="ri-add-line"></i></span>
                                 </div>
-                                <p class="w-48 hidden 2xl:block">{{ formatPrice($item->item_price) }}</p>
-                                <p class="w-48 font-bold hidden 2xl:block">{{ formatPrice($item->total_price) }}</p>
+                                <p class="w-48 hidden 2xl:block">{{ formatPrice($item->item_price) }} + Áfa</p>
+                                <p class="w-48 font-bold hidden 2xl:block">{{ formatPrice($item->total_price) }} + Áfa</p>
                                 <p class="w-20 flex justify-center">
                                     <a onclick="removeItem('{{ route('cart.remove.item', ['id' => $item->id]) }}')" class="text-2xl bg-backgroundNavbar hidden 2xl:flex px-4 py-2 w-min rounded cursor-pointer"><i class="ri-delete-bin-line"></i></a>
                                     <span class="text-2xl bg-backgroundNavbar flex 2xl:hidden px-4 py-2 w-min rounded cursor-pointer editBtn" data-item-id="{{ $item->id }}"><i class="ri-pencil-line"></i></span>
@@ -58,33 +58,46 @@
                     @foreach ($cart->cart_items as $item)
                         <div class="flex justify-between text-lg">
                             <p class="mb-4">{{ $item->quantity }} x {{ $item->name }}</p>
-                            <p class="whitespace-nowrap">{{ formatPrice($item->total_price) }}</p>
+                            <p class="whitespace-nowrap">{{ formatPrice($item->total_price) }} + Áfa</p>
                         </div>
                     @endforeach
                     <div class="flex justify-between mt-6 mb-1 font-bold text-lg">
                         <p>Nettó összeg</p>
-                        <p>{{ formatPrice($cart->total_price / 1.27) }}</p>
+                        <p>{{ formatPrice($cart->total_price) }}</p>
                     </div>
                     <div class="flex justify-between my-1 font-bold text-lg">
-                        <p>ÁFA</p>
-                        <p>{{ formatPrice($cart->total_price - $cart->total_price / 1.27) }}</p>
+                        <p>Szállítási költség</p>
+                        @php
+                            $cart_neto = $cart->total_price;
+
+                            $full_orders = floor($cart_neto / 35000);
+
+                            $remaining_amount = $cart_neto % 35000;
+
+                            if ($remaining_amount > 0) {
+                                $shipping_amount = ($full_orders + 1) * 2500;
+                            } else {
+                                $shipping_amount = $full_orders * 2500;
+                            }
+
+                        @endphp
+                        <p>{{ formatPrice($shipping_amount) }}</p>
+                    </div>
+                    <div class="flex justify-between my-1 font-bold text-lg">
+                        <p>Áfa</p>
+                        <p>{{ formatPrice((($cart->total_price + $shipping_amount) * 0.27)) }}</p>
                     </div>
                     <div class="flex justify-between my-1 font-bold text-lg">
                         <p>Bruttó összeg</p>
-                        <p>{{ formatPrice($cart->total_price) }}</p>
+                        <p>{{ formatPrice($cart->total_price + $shipping_amount + (($cart->total_price + $shipping_amount) * 0.27))}}</p>
                     </div>
                     <div class="flex justify-between mt-2 font-bold text-lg underline">
                         <p>Szállítási költség</p>
                     </div>
-                    <div class="flex justify-between font-bold text-lg">
-                        <p>10 kg alatt</p>
-                        <p>900 Ft</p>
+                    <div class="font-bold">
+                        <p>minden megkezdett nettó 35000 Ft rendelési összeget, nettó 2500 Ft szállítási költség terhel</p>
                     </div>
-                    <div class="flex justify-between mb-2 font-bold text-lg">
-                        <p>10 kg felett</p>
-                        <p>2500 Ft</p>
-                    </div>
-                    <a href="{{ route('shop.checkout') }}" class="bg-backgroundNavbar px-8 py-2 rounded w-100 block mb-3 text-center text-lg shadow-lg hover:bg-backgroundMain">Tovább</a>
+                    <a href="{{ route('shop.checkout') }}" class="bg-backgroundNavbar mt-4 px-8 py-2 rounded w-100 block mb-3 text-center text-lg shadow-lg hover:bg-backgroundMain">Tovább</a>
 
                     <a href="/" class="bg-backgroundNavbar px-8 py-2 rounded w-100 block text-center text-lg shadow-lg hover:bg-backgroundMain">Vissza a vásárláshoz</a>
                 </div>

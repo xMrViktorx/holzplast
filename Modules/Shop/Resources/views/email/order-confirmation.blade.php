@@ -54,20 +54,34 @@
             <tr>
                 <td style="padding: 8px;">{{ $item->name }}</td>
                 <td style="text-align: center; padding: 8px;">{{ $item->quantity }}</td>
-                <td style="text-align: center; padding: 8px;">{{ formatPrice($item->item_price) }}</td>
-                <td style="text-align: center; padding: 8px;">{{ formatPrice($item->total_price) }}</td>
+                <td style="text-align: center; padding: 8px;">{{ formatPrice($item->item_price) }} + Áfa</td>
+                <td style="text-align: center; padding: 8px;">{{ formatPrice($item->total_price) }} + Áfa</td>
             </tr>
         @endforeach
     </table>
     <h3>
         <b>
-            Nettó összeg: {{ formatPrice($order->total_price / 1.27) }} <br>
-            ÁFA: {{ formatPrice($order->total_price - $order->total_price / 1.27) }} <br>
-            Bruttó összeg: {{ formatPrice($order->total_price) }} <br><br>
+            Nettó összeg: {{ formatPrice($order->total_price) }} <br>
+            @php
+                $order_neto = $order->total_price;
+
+                $full_orders = floor($order_neto / 35000);
+
+                $remaining_amount = $order_neto % 35000;
+
+                if ($remaining_amount > 0) {
+                    $shipping_amount = ($full_orders + 1) * 2500;
+                } else {
+                    $shipping_amount = $full_orders * 2500;
+                }
+            @endphp
+            Szállítási költség: {{ formatPrice($shipping_amount) }}<br>
+            Áfa: {{ formatPrice(($order->total_price + $shipping_amount) * 0.27) }} <br>
+            Bruttó összeg: {{ formatPrice($order->total_price + $shipping_amount + (($order->total_price + $shipping_amount) * 0.27)) }} <br><br>
             <span style="text-decoration: underline">Szállítási költség:</span><br>
-            10kg alatt 900 Ft <br>
-            10kg felett 2500 Ft
+            minden megkezdett nettó 35000 Ft rendelési összeget, nettó 2500 Ft szállítási költség terhel
         </b>
+        </br>
     </h3>
     <p>Amennyiben bármilyen kérdése van a rendeléssel kapcsolatban, kérjük, ne habozzon felvenni velünk a kapcsolatot az alábbi elérhetőségeinken: <a href="mailto:holzplast@rcgroup.co">holzplast@rcgroup.co</a>.</p>
     <p>Köszönjük, hogy vásárolt tőlünk. Reméljük, hogy elégedett lesz a termékekkel és szolgáltatásainkkal. Ha további segítségre van szüksége, állunk rendelkezésére.</p><br><br>
