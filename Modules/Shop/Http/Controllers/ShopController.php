@@ -110,6 +110,7 @@ class ShopController extends Controller
             'billing.address' => 'required',
             'billing.house_number' => 'required',
             'data_privacy' => 'required',
+            'pickup' => 'required',
         ];
 
         if (isset($request->billing['private_person'])) {
@@ -168,7 +169,7 @@ class ShopController extends Controller
 
         $order['status'] = 'in progress';
         $order['total_price'] = $cart->total_price;
-
+        $order['pickup'] = $request->pickup;
         $order = Order::create($order);
 
         // Retrieve the input data from the request

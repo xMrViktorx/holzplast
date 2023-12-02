@@ -54,8 +54,8 @@ class CartController extends Controller
 
             $product = Product::find($item->product_id);
 
-            if ($product->amount < $quantity) {
-                Alert::error($product->name . ' termék hozzáadása nem sikerült!', 'Elérhető mennyiség: ' . $product->amount)->showCloseButton();
+            if ($product->amount + $previousQuantity < $quantity) {
+                Alert::error($product->name . ' termék hozzáadása nem sikerült!', 'Elérhető mennyiség: ' . $product->amount + $previousQuantity)->showCloseButton();
                 return redirect()->back();
             }
 

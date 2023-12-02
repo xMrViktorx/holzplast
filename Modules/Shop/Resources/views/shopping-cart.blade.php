@@ -75,9 +75,9 @@
                             $remaining_amount = $cart_neto % 35000;
 
                             if ($remaining_amount > 0) {
-                                $shipping_amount = ($full_orders + 1) * 2500;
+                                $shipping_amount = ($full_orders + 1) * 1970;
                             } else {
-                                $shipping_amount = $full_orders * 2500;
+                                $shipping_amount = $full_orders * 1970;
                             }
 
                         @endphp
@@ -95,7 +95,7 @@
                         <p>Szállítási költség</p>
                     </div>
                     <div class="font-bold">
-                        <p>minden megkezdett nettó 35000 Ft rendelési összeget, nettó 2500 Ft szállítási költség terhel</p>
+                        <p>minden megkezdett nettó 35000 Ft rendelési összeget, nettó 1970 Ft szállítási költség terhel</p>
                     </div>
                     <a href="{{ route('shop.checkout') }}" class="bg-backgroundNavbar mt-4 px-8 py-2 rounded w-100 block mb-3 text-center text-lg shadow-lg hover:bg-backgroundMain">Tovább</a>
 

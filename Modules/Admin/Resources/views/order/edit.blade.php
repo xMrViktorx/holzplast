@@ -160,6 +160,7 @@
                 </tr>
             </table>
         </div>
+        <p class="text-xl my-6">Átvétel: @if($order->pickup == 'delivery')utánvétel @else előrefizetés @endif</p>
         <h3 class="text-2xl my-6">Rendelt termékek</h3>
 
         <div class="overflow-x-auto relative shadow-md sm:rounded-lg">

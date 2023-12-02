@@ -70,16 +70,24 @@
                 $remaining_amount = $order_neto % 35000;
 
                 if ($remaining_amount > 0) {
-                    $shipping_amount = ($full_orders + 1) * 2500;
+                    $shipping_amount = ($full_orders + 1) * 1970;
                 } else {
-                    $shipping_amount = $full_orders * 2500;
+                    $shipping_amount = $full_orders * 1970;
+                }
+
+                $pickup = 0;
+                if($order->pickup == 'delivery') {
+                    $pickup = 500;
                 }
             @endphp
-            Szállítási költség: {{ formatPrice($shipping_amount) }}<br>
-            Áfa: {{ formatPrice(($order->total_price + $shipping_amount) * 0.27) }} <br>
-            Bruttó összeg: {{ formatPrice($order->total_price + $shipping_amount + (($order->total_price + $shipping_amount) * 0.27)) }} <br><br>
+            Szállítási költség: {{ formatPrice($shipping_amount) }} <br>
+            @if($order->pickup == 'delivery')
+                Utánvétel: {{ formatPrice($pickup) }} <br>
+            @endif
+            Áfa: {{ formatPrice(($order->total_price + $shipping_amount + $pickup) * 0.27) }} <br>
+            Bruttó összeg: {{ formatPrice($order->total_price + $shipping_amount + $pickup + (($order->total_price + $shipping_amount + $pickup) * 0.27)) }} <br><br>
             <span style="text-decoration: underline">Szállítási költség:</span><br>
-            minden megkezdett nettó 35000 Ft rendelési összeget, nettó 2500 Ft szállítási költség terhel
+            minden megkezdett nettó 35000 Ft rendelési összeget, nettó 1970 Ft szállítási költség terhel
         </b>
         </br>
     </h3>

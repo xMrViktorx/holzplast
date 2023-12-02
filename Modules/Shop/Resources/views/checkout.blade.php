@@ -289,9 +289,9 @@
                         $remaining_amount = $cart_neto % 35000;
 
                         if ($remaining_amount > 0) {
-                            $shipping_amount = ($full_orders + 1) * 2500;
+                            $shipping_amount = ($full_orders + 1) * 1970;
                         } else {
-                            $shipping_amount = $full_orders * 2500;
+                            $shipping_amount = $full_orders * 1970;
                         }
                     @endphp
                     <p>{{ formatPrice($shipping_amount) }}</p>
@@ -308,10 +308,24 @@
                     <p>Szállítási költség</p>
                 </div>
                 <div class="font-bold">
-                    <p>minden megkezdett nettó 35000 Ft rendelési összeget, nettó 2500 Ft szállítási költség terhel</p>
+                    <p>minden megkezdett nettó 35000 Ft rendelési összeget, nettó 1970 Ft szállítási költség terhel</p>
+                </div>
+                <div class="w-full flex flex-col my-3">
+                    <div class="my-1 font-bold text-lg">Fizetés<span class="text-red-700">*</span></div>
+                    <div class="flex mb-2 items-center">
+                        <input class="w-6 h-6 border-none outline-none focus:ring-0 mr-2" name="pickup" value="prepayment" type="radio" @if (@old('pickup') == 'prepayment') checked @endif>
+                        <label class="tracking-wide font-medium">Előrefizetés</label>
+                    </div>
+                    <div class="flex items-center">
+                        <input class="w-6 h-6 border-none outline-none focus:ring-0 mr-2" name="pickup" value="delivery" type="radio" @if (@old('pickup') == 'delivery') checked @endif>
+                        <label class="tracking-wide font-medium">Utánvétel (nettó 500 Ft)</label>
+                    </div>
+                    @error('pickup')
+                        <div class="text-red-700 mt-2">Fizetési opció választása kötelező!</div>
+                    @enderror
                 </div>
                 <div class="w-full flex items-center my-3">
-                    <input class="w-8 h-8 border-none outline-none focus:ring-0 mr-2" name="data_privacy" value="1" type="checkbox">
+                    <input class="w-8 h-8 border-none outline-none focus:ring-0 mr-2" name="data_privacy" value="1" type="checkbox" @if (@old('data_privacy')) checked @endif>
                     <label class="tracking-wide font-medium">
                         Elfogadom az <a href="#" class="underline">Általános Szerződési Feltételeket.</a><span class="text-red-700">*</span>
                     </label>
