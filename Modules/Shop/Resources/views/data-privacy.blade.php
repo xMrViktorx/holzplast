@@ -4,7 +4,7 @@
     <div class="flex justify-center items-center gap-8 p-2 sm:p-8 pt-32 sm:pt-32">
          <div class="shadow-lg p-4">
             <p class="font-bold">ADATKEZELÉSI SZABÁLYZAT</p>
-            <p>Jelen adatvédelmi - adatkezelési szabályzat (továbbiakban: "Szabályzat") célja, hogy a Társaság (Holz-Plast Kft, 6300 Kalocsa, Erkel Ferenc utca 28, email: holzplast@rcgroup.co, adószám: 11426556-2-03 ; továbbiakban: "Adatkezelő") a shop.holzplast.hu oldalon elérhető honlapján tárolt adatok kezelésével, felhasználásával, továbbításával, valamint az Adatkezelőnél való regisztrációval kapcsolatosan a legszélesebb körben tájékoztassa az érintetteket.</p><br>
+            <p>Jelen adatvédelmi - adatkezelési szabályzat (továbbiakban: "Szabályzat") célja, hogy a Társaság (Holz-Plast Kft, 6300 Kalocsa, Erkel Ferenc utca 28, email: <a href="mailto:holzplast@rcgroup.co" class="text-blue-800">holzplast@rcgroup.co</a>, adószám: 11426556-2-03 ; továbbiakban: "Adatkezelő") a shop.holzplast.hu oldalon elérhető honlapján tárolt adatok kezelésével, felhasználásával, továbbításával, valamint az Adatkezelőnél való regisztrációval kapcsolatosan a legszélesebb körben tájékoztassa az érintetteket.</p><br>
 
             <p class="font-bold">Fogalmak:</p><br>
 

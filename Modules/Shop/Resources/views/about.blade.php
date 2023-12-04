@@ -18,7 +18,7 @@
             <p>H-6300 Kalocsa<br>
             Erkel Ferenc utca 28.<br>
             Tel: +36 30 4283201<br>
-            e-mail: holzplast@rcgroup.co</p><br>
+            e-mail: <a href="mailto:holzplast@rcgroup.co" class="text-blue-800">holzplast@rcgroup.co</a></p><br>
             <a href="{{ route('shop.terms') }}" class="font-bold underline cursor-pointer">Általános szerződési feltételek</a><br><br>
 
             <p class="font-bold">Fizetés</p>
