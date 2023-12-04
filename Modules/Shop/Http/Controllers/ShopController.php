@@ -30,7 +30,7 @@ class ShopController extends Controller
                 ->where('status', 1)
                 ->paginate(12);
         } else {
-            $products = Product::where('status', 1)->orderBy('created_at', 'desc')->paginate(12);
+            $products = Product::where('status', 1)->orderBy('created_at', 'desc')->paginate(5);
         }
         return view('shop::index', compact('products'));
     }
@@ -226,5 +226,17 @@ class ShopController extends Controller
             $result[substr($key, 0, -strlen($suffix))] = $value;
         }
         return $result;
+    }
+
+    public function about() {
+        return view('shop::about');
+    }
+
+    public function termsAndConditions() {
+        return view('shop::terms-and-conditions');
+    }
+
+    public function dataPrivacy() {
+        return view('shop::data-privacy');
     }
 }

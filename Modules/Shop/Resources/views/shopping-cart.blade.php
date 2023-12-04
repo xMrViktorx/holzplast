@@ -1,7 +1,7 @@
 @extends('shop::layouts.master')
 
 @section('content')
-    <div class="min-h-screen pt-32 2xl:pt-0 flex justify-center items-center gap-8">
+    <div class="pt-32 flex justify-center items-center gap-8">
         @if ($cart)
             <div class="flex flex-wrap items-start shadow-xl p-4 sm:p-6">
                 <div>

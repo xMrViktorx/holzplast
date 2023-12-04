@@ -1,8 +1,8 @@
 @extends('shop::layouts.master')
 
 @section('content')
-    <div class="min-h-screen flex justify-center items-center gap-8 xl:pt-0">
-        <form action="{{ route('shop.order') }}" method="POST" class="flex flex-wrap my-32">
+    <div class="flex justify-center items-center gap-8">
+        <form action="{{ route('shop.order') }}" method="POST" class="flex flex-wrap pt-32">
             @csrf
             <div class="w-full xl:w-auto p-6 xl:p-0 text-lg">
                 <h3 class="text-3xl font-bold mb-3">Számlázási cím</h3>
@@ -327,7 +327,7 @@
                 <div class="w-full flex items-center my-3">
                     <input class="w-8 h-8 border-none outline-none focus:ring-0 mr-2" name="data_privacy" value="1" type="checkbox" @if (@old('data_privacy')) checked @endif>
                     <label class="tracking-wide font-medium">
-                        Elfogadom az <a href="#" class="underline">Általános Szerződési Feltételeket.</a><span class="text-red-700">*</span>
+                        Elfogadom az <a href="{{ route('shop.terms') }}" class="underline">Általános Szerződési Feltételeket.</a><span class="text-red-700">*</span>
                     </label>
                 </div>
                 @error('data_privacy')

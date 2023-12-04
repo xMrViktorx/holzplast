@@ -47,10 +47,13 @@
     </style>
 </head>
 
-<body class="bg-backgroundMain font-['Raleway']">
+<body class="bg-backgroundMain font-['Raleway'] min-h-screen">
     @include('sweetalert::alert')
-    @include('shop::navbar')
-    @yield('content')
+    <div class="mb-20">
+        @include('shop::navbar')
+        @yield('content')
+    </div>
+    @include('shop::footer')
 </body>
 
 </html>
