@@ -65,9 +65,9 @@
             @php
                 $order_neto = $order->total_price;
 
-                $full_orders = floor($order_neto / 35000);
+                $full_orders = floor($order_neto / 37000);
 
-                $remaining_amount = $order_neto % 35000;
+                $remaining_amount = $order_neto % 37000;
 
                 if ($remaining_amount > 0) {
                     $shipping_amount = ($full_orders + 1) * 1970;
@@ -87,7 +87,7 @@
             Áfa: {{ formatPrice(($order->total_price + $shipping_amount + $pickup) * 0.27) }} <br>
             Bruttó összeg: {{ formatPrice($order->total_price + $shipping_amount + $pickup + (($order->total_price + $shipping_amount + $pickup) * 0.27)) }} <br><br>
             <span style="text-decoration: underline">Szállítási költség:</span><br>
-            minden megkezdett nettó 35000 Ft rendelési összeget, nettó 1970 Ft szállítási költség terhel
+            minden megkezdett nettó 37000 Ft rendelési összeget, nettó 1970 Ft szállítási költség terhel
         </b>
         </br>
     </h3>

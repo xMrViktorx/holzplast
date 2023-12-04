@@ -30,7 +30,7 @@ class ShopController extends Controller
                 ->where('status', 1)
                 ->paginate(12);
         } else {
-            $products = Product::where('status', 1)->orderBy('created_at', 'desc')->paginate(5);
+            $products = Product::where('status', 1)->orderBy('created_at', 'desc')->paginate(12);
         }
         return view('shop::index', compact('products'));
     }
