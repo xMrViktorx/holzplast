@@ -33,7 +33,7 @@
                             </div>
 
                             {{-- Modal for mobile item update --}}
-                            <div id="editModal-{{ $item->id }}" class="hidden bottom-0 left-0 w-full bg-white p-4 2xl:hidden">
+                            <div id="editModal-{{ $item->id }}" class="hidden bottom-14 left-0 w-full bg-white p-4 2xl:hidden">
                                 <div class="flex flex-col text-center">
                                     <a href="{{ route('cart.remove.item', $item->id) }}" class="text-lg underline">Törlés</a>
                                     <span id="closeModal-{{ $item->id }}" class="absolute top-0 right-0 p-2 pr-4 focus:outline-none closeModalBtn" data-item-id="{{ $item->id }}"><i class="ri-close-line text-3xl"></i></span>
