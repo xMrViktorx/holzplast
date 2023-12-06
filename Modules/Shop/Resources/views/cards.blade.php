@@ -21,7 +21,7 @@
         @endforeach
     @else
         <div class="flex justify-center items-center flex-col mt-6">
-            <div class="font-bold text-2xl mb-2">Jelenleg nincs elérhető termék az adott kereséssel</div>
+            <div class="font-bold text-2xl mb-2 ml-2 ml-sm-0">Jelenleg nincs elérhető termék az adott kereséssel</div>
             <a href="/" class="bg-backgroundNavbar w-min px-8 py-2 text-lg cursor-pointer rounded shadow-lg hover:bg-backgroundMain">Vissza</a>
         </div>
     @endif

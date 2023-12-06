@@ -3,21 +3,21 @@
         <div class="flex justify-between flex-1 sm:hidden p-4">
             @if ($paginator->onFirstPage())
                 <span class="relative inline-flex items-center px-4 py-2 text-sm font-medium bg-backgroundMain cursor-default leading-5 rounded-md shadow-lg">
-                    {!! __('pagination.previous') !!}
+                    Előző
                 </span>
             @else
                 <a href="{{ $paginator->previousPageUrl() }}" class="relative inline-flex items-center px-4 py-2 text-sm font-medium bg-backgroundNavbar leading-5 rounded-md focus:outline-nonetransition ease-in-out duration-150 shadow-lg">
-                    {!! __('pagination.previous') !!}
+                    Előző
                 </a>
             @endif
 
             @if ($paginator->hasMorePages())
                 <a href="{{ $paginator->nextPageUrl() }}" class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium bg-backgroundNavbar leading-5 rounded-md focus:outline-none transition ease-in-out duration-150 shadow-lg">
-                    {!! __('pagination.next') !!}
+                    Következő
                 </a>
             @else
                 <span class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium bg-backgroundMain cursor-default leading-5 rounded-md shadow-lg">
-                    {!! __('pagination.next') !!}
+                    Következő
                 </span>
             @endif
         </div>
