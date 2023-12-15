@@ -1,7 +1,7 @@
 @extends('shop::layouts.master')
 
 @section('content')
-    <div class="flex justify-center items-center gap-8 p-2 sm:p-8 pt-32 sm:pt-32">
+    <div class="flex justify-center items-center gap-8 p-2 sm:p-8 pt-32 sm:pt-32 pb-12 sm:pb-12">
          <div class="shadow-lg p-4">
             <p class="font-bold">Rólunk</p>
             <p>A Holz-Plast Műanyag és Faipari Kft. 1994-ben alakult családi vállalkozásként, 2021-től új tulajdonossal, és ezáltal megújlt fejlesztési ambíciókkal, folytatja az eddigi eredményes gyártási folyamatokat. A cég magas minőségi és műszaki követelményeket kielégítő műanyag termékek fröccsöntésével foglalkozik.  Elsősorban saját fejlesztésű építőipari segédeszközöket gyártunk, lapozáshoz, betonozáshoz,  kisebb részben  háztartási eszközök gyártóinak beszállítójaként működünk. Jelenleg a vállalkozás 9 főt foglalkoztat, saját tulajdonú telephelyén, Kalocsán.</p><br>
@@ -19,6 +19,11 @@
             Erkel Ferenc utca 28.<br>
             Tel: +36 30 4283201<br>
             e-mail: <a href="mailto:holzplast@rcgroup.co" class="text-blue-800">holzplast@rcgroup.co</a></p><br>
+
+            <p class="font-bold">Értékesítés:</p>
+            <p>Tel: +36 30 1601424<br>
+            e-mail: <a href="mailto:holzplastker@rcgroup.co" class="text-blue-800">holzplastker@rcgroup.co</a></p><br>
+
             <a href="{{ route('shop.terms') }}" class="font-bold underline cursor-pointer">Általános szerződési feltételek</a><br><br>
 
             <p class="font-bold">Fizetés</p>
