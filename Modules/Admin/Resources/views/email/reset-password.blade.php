@@ -12,7 +12,7 @@
     <p>Azért kaptad ezt az emailt mivel jelszó frissítési kérelmet kaptunk a felhasználódtól.</p>
     <p><a href="{{ route('password.reset', $token) }}">Kattinsd ide a jelszavad frissítéséhez</a></p>
     <p>Amennyiben nem te kérelmezted a jelszó frissítését, hagyd ezt az emailt figyelmen kívül.</p>
-    <p>Üdvözlettel,<br>Holz-Plast</p>
+    <p>Üdvözlettel,<br>Holz-Plast Kft.</p>
 </body>
 
 </html>

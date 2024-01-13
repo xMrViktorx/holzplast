@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rendelési megerősítés - Holz-Plast</title>
+    <title>Rendelési megerősítés - Holz-Plast Kft.</title>
 </head>
 
 <body>
@@ -15,7 +15,7 @@
             {{ $billing_address->first_name }} {{ $billing_address->last_name }},
         @endif
     </p>
-    <p>Szeretnénk megköszönni Önnek a rendelést a Holz-Plast webáruházban. Nagyon hálásak vagyunk a bizalmáért és örömmel értesítjük, hogy rendelése sikeresen beérkezett és feldolgozásra kerül.</p>
+    <p>Szeretnénk megköszönni Önnek a rendelést a Holz-Plast Kft. webáruházában. Nagyon hálásak vagyunk a bizalmáért és örömmel értesítjük, hogy rendelése sikeresen beérkezett és feldolgozásra kerül.</p>
     <h3><b>Rendelés adatai:</b></h3>
     <p>Rendelés azonosítója: #{{ $order->id }}<br>
         Rendelés dátuma: {{ $order->created_at }}<br>
@@ -95,7 +95,7 @@
     <p>Köszönjük, hogy vásárolt tőlünk. Reméljük, hogy elégedett lesz a termékekkel és szolgáltatásainkkal. Ha további segítségre van szüksége, állunk rendelkezésére.</p><br><br>
     <p>Üdvözlettel,</p>
     <p>
-        Holz-Plast<br>
+        Holz-Plast Kft.<br>
         H-6300 Kalocsa<br>
         Erkel Ferenc utca 28.<br>
         Tel: +36 30 4283201<br>
