@@ -88,6 +88,11 @@
             Bruttó összeg: {{ formatPrice($order->total_price + $shipping_amount + $pickup + (($order->total_price + $shipping_amount + $pickup) * 0.27)) }} <br><br>
             <span style="text-decoration: underline">Szállítási költség:</span><br>
             minden megkezdett nettó 37000 Ft rendelési összeget, nettó 1970 Ft szállítási költség terhel
+
+            @if ($order->pickup == 'prepayment')
+                <br><br><span style="text-decoration: underline">Előrefizetés</span><br>
+                Kérjük a teljes összeget befizetni a Holz-Plast Kft. K&H Banknál vezetett 10402537-50527072-75551005 számú számlájára, "webshop" közleménnyel.
+            @endif
         </b>
         </br>
     </h3>

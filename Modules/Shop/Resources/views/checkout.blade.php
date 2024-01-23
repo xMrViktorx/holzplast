@@ -313,8 +313,8 @@
                 <div class="w-full flex flex-col my-3">
                     <div class="my-1 font-bold text-lg">Fizetés<span class="text-red-700">*</span></div>
                     <div class="flex mb-2 items-center">
-                        <input class="w-6 h-6 border-none outline-none focus:ring-0 mr-2" name="pickup" value="prepayment" type="radio" @if (@old('pickup') == 'prepayment') checked @endif>
-                        <label class="tracking-wide font-medium">Előrefizetés</label>
+                        <input class="w-7 h-6 border-none outline-none focus:ring-0 mr-2" name="pickup" value="prepayment" type="radio" @if (@old('pickup') == 'prepayment') checked @endif>
+                        <label class="tracking-wide font-medium w-fit">Előrefizetés - Kérjük a teljes összeget befizetni a Holz-Plast Kft. K&H Banknál vezetett 10402537-50527072-75551005 számú számlájára, "webshop" közleménnyel.</label>
                     </div>
                     <div class="flex items-center">
                         <input class="w-6 h-6 border-none outline-none focus:ring-0 mr-2" name="pickup" value="delivery" type="radio" @if (@old('pickup') == 'delivery') checked @endif>
