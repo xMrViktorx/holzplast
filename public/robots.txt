@@ -1,2 +1,3 @@
 User-agent: *
 Disallow:
+Sitemap: https://shop.holzplast.hu/sitemap.xml

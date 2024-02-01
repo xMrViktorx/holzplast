@@ -5,6 +5,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Üdvözöljük webáruházunkban, ahol kiváló minőségű burkoló- és építőipari eszközöket találhat. Fedezze fel azokat az eszközöket, amelyek segítenek Önnek tökéletes burkolatokat létrehozni, és vegye igénybe szakmai munkájához szükséges kiváló minőségű termékeinket.">
+    <meta name="keywords" content="ékek, ecsetek, spathlik, burkolatszintező alátétek, burkolatszintező talpak, fugakeresztek, fuga ék, burkolatszintező ék, csőtámasztó, kör távtartó, fánglik, elasztikus vödrök, távtartó lécek, burkoló eszközök, építőipari eszközök">
+    <meta name="author" content="Holz-Plast">
+    <meta name="robots" content="index, follow">
     <title>Holz-Plast Shop</title>
     <link rel="icon" href="{{ url('build/images/icon.ico') }}" type="image/x-icon" />
     <link rel="shortcut icon" href="{{ url('build/images/icon.ico') }}" type="image/x-icon" />
