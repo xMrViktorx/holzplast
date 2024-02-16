@@ -106,8 +106,6 @@ class ProductController extends Controller
             'slug' => 'required|unique:products,slug,' . $product->id,
             'description' => 'required',
             'status' => 'boolean',
-            'sort_in_category' => 'integer|nullable',
-            'sort_in_landing' => 'integer|nullable',
             'price' => 'integer',
             'amount' => 'integer',
             'category_id' => 'required',
