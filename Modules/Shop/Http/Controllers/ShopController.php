@@ -28,9 +28,10 @@ class ShopController extends Controller
             $products = Product::where('name', 'like', '%' . $query . '%')
                 ->orWhere('description', 'like', '%' . $query . '%')
                 ->where('status', 1)
+                ->orderByRaw('ISNULL(sort_in_landing), sort_in_landing')
                 ->paginate(12);
         } else {
-            $products = Product::where('status', 1)->orderBy('created_at', 'desc')->paginate(12);
+            $products = Product::where('status', 1)->orderByRaw('ISNULL(sort_in_landing), sort_in_landing')->paginate(12);
         }
         return view('shop::index', compact('products'));
     }
@@ -69,7 +70,7 @@ class ShopController extends Controller
 
         $category = Category::where('slug', $slug)->first();
         if ($category) {
-            $products =  $category->products()->where('status', 1)->orderBy('created_at', 'desc')->paginate(12);
+            $products =  $category->products()->where('status', 1)->orderByRaw('ISNULL(sort_in_category), sort_in_category')->paginate(12);
             return view('shop::category-overview', compact('products'));
         } else {
             abort(404);

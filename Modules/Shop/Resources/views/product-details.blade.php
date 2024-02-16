@@ -7,7 +7,7 @@
             <div class="font-bold text-3xl md:text-5xl mb-2">{{ $product->name }}</div>
             <div class="text-lg">{!! $product->description !!}</div>
             <div class="font-bold text-2xl my-4">{{ formatPrice($product->price) }} + Áfa</div>
-            @if ($product->amount)
+            @if ($product->amount && $product->status)
                 <form action="{{ route('cart.add') }}" method="POST">
                     @csrf
                     <div class="flex items-center mb-4">
