@@ -59,6 +59,77 @@
         @yield('content')
     </div>
     @include('shop::footer')
+
+    <!-- Modal -->
+    <div id="myModal" class="modal bg-black bg-opacity-40 fixed top-0 left-0 w-full h-full flex justify-center items-center z-50">
+        <!-- Modal content -->
+        <div class="bg-white p-8 rounded-lg shadow-lg relative">
+        <!-- Close button -->
+        <span class="close absolute -top-4 right-0 p-2 cursor-pointer text-5xl">&times;</span>
+        <!-- Image with link -->
+        <a href="https://shop.holzplast.hu/?search=Burkolatszintez%C5%91+talp">
+            <img src="build/images/akcio.jpeg" alt="Modal Image" class="max-w-96 mx-auto">
+        </a>
+        </div>
+    </div>
+
+    <script>
+        // Function to set cookie
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
+        // Function to get cookie
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i];
+                while (cookie.charAt(0) == ' ') {
+                cookie = cookie.substring(1, cookie.length);
+                }
+                if (cookie.indexOf(nameEQ) == 0) {
+                return cookie.substring(nameEQ.length, cookie.length);
+                }
+            }
+            return null;
+        }
+
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the close button
+        var closeButton = document.querySelector(".close");
+
+        // Check if the modal has been shown and the cookie timestamp
+        var modalShown = getCookie("modalShown");
+        var cookieTimestamp = parseInt(getCookie("cookieTimestamp"));
+
+        // Check if the cookie has expired (more than 1 day has passed)
+        var isCookieExpired = cookieTimestamp && (Date.now() - cookieTimestamp) > (24 * 60 * 60 * 1000);
+
+        // Show modal if it hasn't been shown during the current session or if the cookie has expired
+        if (!modalShown || isCookieExpired) {
+            modal.style.display = "flex";
+            setCookie("modalShown", true, 1); // Set cookie to expire in 1 day
+            if (!cookieTimestamp) {
+                setCookie("cookieTimestamp", Date.now(), 1); // Set cookie timestamp only when the modal is first shown
+            }
+        } else {
+            modal.style.display = "none";
+        }
+
+        // Close the modal when the close button is clicked
+        closeButton.addEventListener("click", function() {
+            modal.style.display = "none";
+        });
+    </script>
 </body>
 
 </html>
