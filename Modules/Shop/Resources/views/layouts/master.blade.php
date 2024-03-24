@@ -90,22 +90,28 @@
         // Add event listeners for each main category
         categories.forEach(category => {
             const subcategories = category.querySelector('.subcategories');
+            const arrowIcon = category.querySelector('.toggle-icon');
             
-            // Show subcategories on hover
+            // Show subcategories and rotate arrow on hover
             category.addEventListener('mouseenter', () => {
                 if (subcategories) {
                     subcategories.classList.remove('hidden');
                 }
+                if (arrowIcon) {
+                    arrowIcon.style.transform = 'rotate(90deg)';
+                }
             });
             
-            // Hide subcategories when mouse leaves
+            // Hide subcategories and reset arrow rotation when mouse leaves
             category.addEventListener('mouseleave', () => {
                 if (subcategories) {
                     subcategories.classList.add('hidden');
                 }
+                if (arrowIcon) {
+                    arrowIcon.style.transform = 'rotate(0deg)';
+                }
             });
         });
-
         document.addEventListener("DOMContentLoaded", function() {
             var toggleIcons = document.querySelectorAll('.toggle-icon');
 

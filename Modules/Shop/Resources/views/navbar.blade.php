@@ -15,7 +15,7 @@
                 <ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 text-base font-bold">
                     @foreach ($categories as $category)
                         <li class="relative md:block hidden">
-                            <a href="/{{ $category->slug }}" class="block py-4 text-center hover:text-white uppercase">{{ $category->name }}</a>
+                            <a href="/{{ $category->slug }}" class="flex align-middle py-4 text-center hover:text-white uppercase">{{ $category->name }} @if(count($category->categories) > 0) <i class="ri-arrow-right-s-line toggle-icon"></i> @endif</a>
                             @if(count($category->categories) > 0)
                                 <ul class="absolute left-1/2 transform -translate-x-1/2 hidden bg-backgroundNavbar z-10 subcategories" data-category="{{ $category->slug }}">
                                     @foreach ($category->categories as $subcategory)
@@ -28,7 +28,7 @@
                             @endif
                         </li>
                         <li class="md:hidden block">
-                            <a href="/{{ $category->slug }}" class="py-4 text-center hover:text-white uppercase toggle-subcategories flex align-middle justify-center">{{ $category->name }} @if(count($category->categories) > 0) <i class="ri-arrow-right-s-line toggle-icon px-5"></i> @endif</a>
+                            <a href="/{{ $category->slug }}" class="py-4 text-center hover:text-white uppercase toggle-subcategories flex align-middle justify-center">{{ $category->name }} @if(count($category->categories) > 0) <i class="ri-arrow-right-s-line toggle-icon pl-5"></i> @endif</a>
                             @if(count($category->categories) > 0)
                                 <ul class="hidden bg-backgroundNavbar z-10 subcategories">
                                     @foreach ($category->categories as $subcategory)
