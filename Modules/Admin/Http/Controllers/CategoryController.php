@@ -25,7 +25,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin::category.create');
+        $categories = Category::whereNull('parent_category_id')->get();
+        return view('admin::category.create', compact('categories'));
     }
 
     /**
@@ -39,6 +40,7 @@ class CategoryController extends Controller
             'name' => 'required|unique:categories',
             'slug' => 'required|unique:categories',
             'status' => 'boolean',
+            'parent_category_id' => 'nullable',
         ]);
 
         Category::create($validated);
@@ -65,7 +67,8 @@ class CategoryController extends Controller
         $category = Category::find($id);
 
         if ($category) {
-            return view('admin::category.edit', compact('category'));
+            $categories = Category::whereNull('parent_category_id')->where('id', '!=', $id)->get();
+            return view('admin::category.edit', compact('category', 'categories'));
         } else {
             return redirect()->back();
         }
@@ -89,6 +92,7 @@ class CategoryController extends Controller
             'name' => 'required|unique:categories,name,' . $category->id,
             'slug' => 'required|unique:categories,slug,' . $category->id,
             'status' => 'boolean',
+            'parent_category_id' => 'nullable',
         ]);
 
         if (!isset($validated['status'])) {

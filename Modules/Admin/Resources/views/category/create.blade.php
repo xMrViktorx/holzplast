@@ -29,6 +29,19 @@
                     <div class="text-red-700">{{ $message }}</div>
                 @enderror
             </div>
+            <div class="mb-6">
+                <label for="parent_category" class="block mb-2 text-sm font-medium text-gray-900">Szülő kategória</label>
+                <select id="parent_category" name="parent_category_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    <option value="">-</option>
+                    @foreach ($categories as $main_category)
+                        <option value="{{ $main_category->id }}">
+                            {{ $main_category->name }}</option>
+                    @endforeach
+                </select>
+                @error('parent_category_id')
+                    <div class="text-red-700">{{ $message }}</div>
+                @enderror
+            </div>
             <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Mentés</button>
         </form>
     </div>

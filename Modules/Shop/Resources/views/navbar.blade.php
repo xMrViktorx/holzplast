@@ -14,13 +14,37 @@
             <div class="hidden md:block w-full md:w-auto order-2" id="mobile-menu">
                 <ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 text-base font-bold">
                     @foreach ($categories as $category)
-                        <li>
+                        <li class="relative md:block hidden">
                             <a href="/{{ $category->slug }}" class="block py-4 text-center hover:text-white uppercase">{{ $category->name }}</a>
+                            @if(count($category->categories) > 0)
+                                <ul class="absolute left-1/2 transform -translate-x-1/2 hidden bg-backgroundNavbar z-10 subcategories" data-category="{{ $category->slug }}">
+                                    @foreach ($category->categories as $subcategory)
+                                        <li>
+                                            <a href="/{{ $subcategory->slug }}" class="block py-2 px-4 text-center uppercase hover:text-white">{{ $subcategory->name }}</a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+
+                            @endif
+                        </li>
+                        <li class="md:hidden block">
+                            <a href="/{{ $category->slug }}" class="py-4 text-center hover:text-white uppercase toggle-subcategories flex align-middle justify-center">{{ $category->name }} @if(count($category->categories) > 0) <i class="ri-arrow-right-s-line toggle-icon px-5"></i> @endif</a>
+                            @if(count($category->categories) > 0)
+                                <ul class="hidden bg-backgroundNavbar z-10 subcategories">
+                                    @foreach ($category->categories as $subcategory)
+                                        <li>
+                                            <a href="/{{ $subcategory->slug }}" class="block py-4 text-center hover:text-white uppercase">{{ $subcategory->name }}</a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endif
                         </li>
                     @endforeach
                 </ul>
             </div>
         </div>
+        
+        
         <div class="block md:hidden">
             @if (isset($cart) && $cart)
                 <a href="{{ route('cart.index') }}" class="relative p-2 cursor-pointer hover:text-white">

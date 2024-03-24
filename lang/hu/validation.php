@@ -151,6 +151,7 @@ return [
         'slug' => 'elérési útvonal',
         'category_id' => 'kategória',
         'description' => 'leírás',
+        'iso' => 'cikkszám',
         'image' => 'kép',
         'price' => 'ár',
         'amount' => 'mennyiség',

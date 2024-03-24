@@ -42,7 +42,7 @@ class ShopController extends Controller
      */
     public static function getCategories()
     {
-        $categories = Category::where('status', 1)->get();
+        $categories = Category::where('status', 1)->whereNull('parent_category_id')->get();
         return $categories;
     }
 
